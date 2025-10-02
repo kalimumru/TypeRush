@@ -1,7 +1,7 @@
 
-import LandingPage from '@/components/landing/landing-page';
+import TyperushContainer from '@/components/typerush/typerush-container';
 
-export default function Home() {
+export default function PlayPage() {
   return (
     <div className="relative min-h-screen w-full bg-background overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -10,7 +10,7 @@ export default function Home() {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full filter blur-3xl animate-float animation-delay-3000 opacity-50"></div>
       </div>
       <div className="relative z-10 flex flex-col min-h-dvh">
-          <LandingPage />
+          <TyperushContainer />
       </div>
     </div>
   );
