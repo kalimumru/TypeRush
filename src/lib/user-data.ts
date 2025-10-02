@@ -1,3 +1,4 @@
+
 import { userStatsSchema, type UserStats } from './types';
 
 const USER_DATA_KEY = 'typerush_user_data';
@@ -18,10 +19,11 @@ export const loadUserData = (): UserStats => {
       return parsed.data;
     }
     
-    console.warn("Invalid user data in localStorage, resetting to default.", parsed.error);
+    // Don't log in production
+    // console.warn("Invalid user data in localStorage, resetting to default.", parsed.error);
     return defaultUserData;
   } catch (error) {
-    console.error("Failed to load user data from localStorage:", error);
+    // console.error("Failed to load user data from localStorage:", error);
     return defaultUserData;
   }
 };
@@ -34,6 +36,6 @@ export const saveUserData = (stats: UserStats) => {
   try {
     localStorage.setItem(USER_DATA_KEY, JSON.stringify(stats));
   } catch (error) {
-    console.error("Failed to save user data to localStorage:", error);
+    // console.error("Failed to save user data to localStorage:", error);
   }
 };

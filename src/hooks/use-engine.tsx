@@ -1,15 +1,28 @@
+
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { generateWords } from '@/lib/word-generator';
 import type { GameState, UserStats } from '@/lib/types';
 import { useToast } from "@/hooks/use-toast";
-import { loadUserData, saveUserData, defaultUserData } from '@/lib/user-data';
+import { loadUserData, saveUserData } from '@/lib/user-data';
 import { Trophy } from 'lucide-react';
 import React from 'react';
 
 const GAME_TIME = 30; // 30 seconds for a quick game
 const WORDS_COUNT = 50;
+
+const defaultStats: UserStats = {
+  level: 1,
+  xp: 0,
+  wpm: 0,
+  accuracy: 0,
+  streaks: 0,
+  badges: [],
+  unlockedLetters: ['a', 's', 'd', 'f', 'j', 'k', 'l', ';'],
+  keyStats: {},
+};
+
 
 const useEngine = () => {
   const [state, setState] = useState<GameState>('waiting');
@@ -19,13 +32,14 @@ const useEngine = () => {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState(GAME_TIME);
   const [lastPressedKey, setLastPressedKey] = useState<string | null>(null);
-  const [stats, setStats] = useState<UserStats>(defaultUserData);
+  const [stats, setStats] = useState<UserStats>(defaultStats);
+  const [isMounted, setIsMounted] = useState(false);
   const [xpGained, setXpGained] = useState(0);
 
   const { toast } = useToast();
 
   useEffect(() => {
-    // Load user data only on the client-side after hydration
+    setIsMounted(true);
     setStats(loadUserData());
   }, []);
 
@@ -80,11 +94,6 @@ const useEngine = () => {
       if (currentXp >= xpForNextLevel) {
         newLevel += 1;
         currentXp -= xpForNextLevel;
-        toast({
-          title: "Level Up!",
-          description: `Congratulations! You've reached level ${newLevel}.`,
-          action: <Trophy className="text-yellow-400" />,
-        });
       }
 
       const updatedStats: UserStats = {
@@ -96,11 +105,21 @@ const useEngine = () => {
         xp: currentXp,
       };
 
-      // In a real app, keyStats would be updated here based on the session
       saveUserData(updatedStats);
       return updatedStats;
     });
-  }, [startTime, totalTyped, accuracy, toast]);
+  }, [startTime, totalTyped, accuracy]);
+
+  useEffect(() => {
+    if (state === 'finished' && stats.level > (loadUserData().level || 1)) {
+       toast({
+          title: "Level Up!",
+          description: `Congratulations! You've reached level ${stats.level}.`,
+          action: <Trophy className="text-yellow-400" />,
+        });
+    }
+  }, [state, stats.level, toast]);
+
 
   useEffect(() => {
     if (state === 'running') {
@@ -147,6 +166,24 @@ const useEngine = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [handleKeyDown]);
+  
+  if (!isMounted) {
+    return { 
+      state: 'waiting', 
+      words: '', 
+      typed: '', 
+      errors: new Set(), 
+      wpm: 0, 
+      accuracy: 100, 
+      timeLeft: GAME_TIME, 
+      lastPressedKey: null, 
+      stats: defaultStats, 
+      totalTyped: 0, 
+      restart: () => {}, 
+      startGame: () => {}, 
+      xpGained: 0 
+    };
+  }
 
   return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained };
 };
