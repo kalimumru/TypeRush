@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 
 type WordsDisplayProps = {
   words: string;
@@ -9,17 +9,25 @@ type WordsDisplayProps = {
   totalTyped: number;
 };
 
-const Character = React.memo(({ char, state }: { char: string, state: 'correct' | 'incorrect' | 'untyped' | 'cursor' }) => {
+const Character = React.memo(({ char, state, isCursor }: { char: string; state: 'correct' | 'incorrect' | 'untyped', isCursor: boolean }) => {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (isCursor && ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+  }, [isCursor]);
+
   return (
     <span
-      className={cn("font-mono text-2xl md:text-3xl transition-colors duration-150", {
+      ref={isCursor ? ref : null}
+      className={cn("font-mono text-2xl md:text-3xl transition-colors duration-150 relative", {
         "text-primary": state === "correct",
         "text-red-500": state === "incorrect",
         "text-muted-foreground": state === "untyped",
-        "relative": state === "cursor",
       })}
     >
-      {state === 'cursor' && (
+      {isCursor && (
         <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent animate-pulse" />
       )}
       {char}
@@ -28,26 +36,25 @@ const Character = React.memo(({ char, state }: { char: string, state: 'correct' 
 });
 Character.displayName = "Character";
 
-const WordsDisplay = ({ words, typed }: WordsDisplayProps) => {
+const WordsDisplay = ({ words, typed, totalTyped }: WordsDisplayProps) => {
+
   const characters = useMemo(() => {
     return words.split('').map((char, index) => {
+      let state: 'correct' | 'incorrect' | 'untyped' = 'untyped';
       if (index < typed.length) {
-        return { char, state: char === typed[index] ? 'correct' : 'incorrect' };
-      } else if (index === typed.length) {
-        return { char, state: 'cursor' };
-      } else {
-        return { char, state: 'untyped' };
+        state = char === typed[index] ? 'correct' : 'incorrect';
       }
+      return { char, state, isCursor: index === typed.length };
     });
   }, [words, typed]);
 
   return (
-    <div className="w-full h-full p-4 md:p-6 bg-black/20 rounded-lg overflow-hidden leading-relaxed tracking-wider select-none border border-white/10 flex items-center justify-center">
-      <p className="text-center">
+    <div className="w-full h-full p-4 md:p-6 bg-black/20 rounded-lg overflow-hidden leading-relaxed tracking-wider select-none border border-white/10">
+      <div className="text-left whitespace-pre-wrap">
         {characters.map((item, index) => (
-          <Character key={index} char={item.char} state={item.state as any} />
+          <Character key={index} char={item.char} state={item.state} isCursor={item.isCursor} />
         ))}
-      </p>
+      </div>
     </div>
   );
 };
