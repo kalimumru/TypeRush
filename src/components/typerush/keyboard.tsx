@@ -8,7 +8,7 @@ const keyLayout = [
   ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'],
   ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\'],
   ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter'],
-  ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'Shift'],
+  ['ShiftLeft', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'ShiftRight'],
   [' ', ' '],
 ];
 
@@ -24,11 +24,13 @@ const keyIdMap: { [key: string]: string } = {
   'z': 'KeyZ', 'x': 'KeyX', 'c': 'KeyC', 'v': 'KeyV', 'b': 'KeyB', 'n': 'KeyN',
   'm': 'KeyM', ',': 'Comma', '.': 'Period', '/': 'Slash',
   ' ': 'Space',
+  'shiftleft': 'ShiftLeft',
+  'shiftright': 'ShiftRight',
 };
 
 const getKeyId = (key: string) => {
   if (key.length === 1) return keyIdMap[key.toLowerCase()];
-  return key;
+  return keyIdMap[key.toLowerCase()] || key;
 };
 
 type KeyboardProps = {
@@ -62,9 +64,10 @@ const Keyboard = ({ lastPressedKey, keyStats }: KeyboardProps) => {
       <div className="space-y-1 md:space-y-2" style={{ transform: 'rotateX(10deg)' }}>
         {keyLayout.map((row, rowIndex) => (
           <div key={rowIndex} className="flex justify-center gap-1 md:gap-2">
-            {row.map((key) => {
+            {row.map((key, keyIndex) => {
               const keyId = getKeyId(key);
               const isActive = activeKey === keyId;
+              const displayKey = key.startsWith('Shift') ? 'Shift' : key;
               
               const keyClass = cn(
                 "flex items-center justify-center rounded-md md:rounded-lg text-xs md:text-sm font-sans uppercase transition-all duration-150 ease-out border-b-2 md:border-b-4",
@@ -72,7 +75,7 @@ const Keyboard = ({ lastPressedKey, keyStats }: KeyboardProps) => {
                 {
                   'w-12 h-10 md:w-24 md:h-12': key === 'Backspace',
                   'w-16 h-10 md:w-32 md:h-12': key === 'Tab' || key === 'Enter',
-                  'w-20 h-10 md:w-40 md:h-12': key === 'CapsLock' || key === 'Shift',
+                  'w-20 h-10 md:w-40 md:h-12': key === 'CapsLock' || key.startsWith('Shift'),
                   'flex-1 h-10 md:h-12': key === ' ',
                   'w-8 h-10 md:w-12 md:h-12': key.length === 1,
                   'transform -translate-y-px': !isActive,
@@ -84,8 +87,8 @@ const Keyboard = ({ lastPressedKey, keyStats }: KeyboardProps) => {
               );
               
               return (
-                <div key={keyId || key} id={keyId} className={keyClass}>
-                  {key !== ' ' ? key : 'Space'}
+                <div key={`${keyId}-${keyIndex}`} id={keyId} className={keyClass}>
+                  {displayKey !== ' ' ? displayKey : 'Space'}
                 </div>
               );
             })}
