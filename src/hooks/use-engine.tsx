@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { generateWords } from '@/lib/word-generator';
 import type { GameState, UserStats } from '@/lib/types';
 import { useToast } from "@/hooks/use-toast";
-import { loadUserData, saveUserData } from '@/lib/user-data';
+import { loadUserData, saveUserData, defaultUserData } from '@/lib/user-data';
 import { Trophy } from 'lucide-react';
 import React from 'react';
 
@@ -19,10 +19,15 @@ const useEngine = () => {
   const [startTime, setStartTime] = useState<number | null>(null);
   const [timeLeft, setTimeLeft] = useState(GAME_TIME);
   const [lastPressedKey, setLastPressedKey] = useState<string | null>(null);
-  const [stats, setStats] = useState<UserStats>(loadUserData());
+  const [stats, setStats] = useState<UserStats>(defaultUserData);
   const [xpGained, setXpGained] = useState(0);
 
   const { toast } = useToast();
+
+  useEffect(() => {
+    // Load user data only on the client-side after hydration
+    setStats(loadUserData());
+  }, []);
 
   const totalTyped = useMemo(() => typed.length, [typed]);
   const wpm = useMemo(() => {
