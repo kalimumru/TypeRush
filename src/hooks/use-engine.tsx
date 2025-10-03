@@ -35,6 +35,8 @@ const useEngine = () => {
   const [stats, setStats] = useState<UserStats>(defaultStats);
   const [isMounted, setIsMounted] = useState(false);
   const [xpGained, setXpGained] = useState(0);
+  const [isNewKeyCorrect, setIsNewKeyCorrect] = useState<boolean | null>(null);
+  const [levelUp, setLevelUp] = useState(false);
 
   const { toast } = useToast();
 
@@ -70,11 +72,13 @@ const useEngine = () => {
     setState('running');
     setStartTime(Date.now());
     setTimeLeft(GAME_TIME);
+    setLevelUp(false);
   }, [prepareWords]);
 
   const restart = useCallback(() => {
     setState('waiting');
     setXpGained(0);
+    setLevelUp(false);
   }, []);
 
   const finishGame = useCallback(() => {
@@ -94,6 +98,7 @@ const useEngine = () => {
       if (currentXp >= xpForNextLevel) {
         newLevel += 1;
         currentXp -= xpForNextLevel;
+        setLevelUp(true);
       }
 
       const updatedStats: UserStats = {
@@ -111,14 +116,14 @@ const useEngine = () => {
   }, [startTime, totalTyped, accuracy]);
 
   useEffect(() => {
-    if (state === 'finished' && stats.level > (loadUserData().level || 1)) {
+    if (levelUp) {
        toast({
           title: "Level Up!",
           description: `Congratulations! You've reached level ${stats.level}.`,
           action: <Trophy className="text-yellow-400" />,
         });
     }
-  }, [state, stats.level, toast]);
+  }, [levelUp, stats.level, toast]);
 
 
   useEffect(() => {
@@ -143,6 +148,7 @@ const useEngine = () => {
     e.preventDefault();
     const { key } = e;
     setLastPressedKey(key);
+    setIsNewKeyCorrect(null);
 
     if (key === 'Backspace') {
       setTyped(prev => prev.slice(0, -1));
@@ -157,6 +163,9 @@ const useEngine = () => {
     if (key.length === 1) {
       if (words[totalTyped] !== key) {
         setErrors(prev => new Set(prev).add(totalTyped));
+        setIsNewKeyCorrect(false);
+      } else {
+        setIsNewKeyCorrect(true);
       }
       setTyped(prev => prev + key);
     }
@@ -181,11 +190,13 @@ const useEngine = () => {
       totalTyped: 0, 
       restart: () => {}, 
       startGame: () => {}, 
-      xpGained: 0 
+      xpGained: 0,
+      isNewKeyCorrect: null,
+      levelUp: false,
     };
   }
 
-  return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained };
+  return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained, isNewKeyCorrect, levelUp };
 };
 
 export default useEngine;
