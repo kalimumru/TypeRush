@@ -9,9 +9,9 @@ const useAudio = () => {
   const [volume, setVolume] = useState(0.5);
 
   const soundFiles = {
-    correct: 'https://cdn.pixabay.com/audio/2022/03/15/audio_514652c71f.mp3',
-    error: 'https://cdn.pixabay.com/audio/2021/08/04/audio_a42426c1a5.mp3',
-    levelUp: 'https://cdn.pixabay.com/audio/2022/11/17/audio_88f1e56ed1.mp3',
+    correct: 'https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg',
+    error: 'https://actions.google.com/sounds/v1/impacts/sharp_impact.ogg',
+    levelUp: 'https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg',
   };
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const useAudio = () => {
       const loadedBuffers: Record<string, AudioBuffer> = {};
       for (const key in soundFiles) {
         try {
-          const response = await fetch(soundFiles[key as keyof typeof soundFiles]);
+          const response = await fetch(soundFiles[key as keyof typeof soundFiles], { mode: 'cors' });
           const arrayBuffer = await response.arrayBuffer();
           const audioBuffer = await context.decodeAudioData(arrayBuffer);
           loadedBuffers[key] = audioBuffer;
