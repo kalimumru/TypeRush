@@ -1,7 +1,6 @@
 "use client";
 
 import useEngine from "@/hooks/use-engine";
-import useAudio from "@/hooks/use-audio";
 import Header from "./header";
 import TypingSection from "./typing-section";
 import StatsSection from "./stats-section";
@@ -11,12 +10,6 @@ import { Trophy } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 
 const TyperushContainer = () => {
-  const {
-    playCorrect,
-    playError,
-    playLevelUp,
-  } = useAudio();
-
   const {
     state,
     words,
@@ -38,25 +31,14 @@ const TyperushContainer = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (state === "running") {
-      if (isNewKeyCorrect === true) {
-        playCorrect();
-      } else if (isNewKeyCorrect === false) {
-        playError();
-      }
-    }
-  }, [typed, state, playCorrect, playError, isNewKeyCorrect]);
-
-  useEffect(() => {
     if (levelUp) {
-      playLevelUp();
       toast({
         title: "Level Up!",
         description: `Congratulations! You've reached level ${stats.level}.`,
         action: <Trophy className="text-yellow-400" />,
       });
     }
-  }, [levelUp, playLevelUp, stats.level, toast]);
+  }, [levelUp, stats.level, toast]);
 
 
   return (
