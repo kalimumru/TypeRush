@@ -5,6 +5,7 @@ import Keyboard from "./keyboard";
 import type { GameState, UserStats } from "@/lib/types";
 import { Button } from "../ui/button";
 import { Play } from "lucide-react";
+import { Card } from "../ui/card";
 
 type TypingSectionProps = {
   words: string;
@@ -27,9 +28,9 @@ const TypingSection = ({
 }: TypingSectionProps) => {
   return (
     <div className="flex-1 flex flex-col justify-center items-center gap-8 w-full p-4">
-      <div className="relative w-full h-40">
+      <Card className="relative w-full h-40 shadow-lg">
         {state !== 'running' ? (
-           <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/20 backdrop-blur-md rounded-lg z-10 animate-in fade-in">
+           <div className="absolute inset-0 flex flex-col items-center justify-center bg-card/80 backdrop-blur-sm rounded-lg z-10 animate-in fade-in">
              <h2 className="text-2xl font-headline text-primary">Start Typing Test</h2>
              <p className="text-muted-foreground mb-4">Click the button to begin.</p>
              <Button size="lg" onClick={onStart}>
@@ -38,7 +39,7 @@ const TypingSection = ({
            </div>
         ) : null}
         <WordsDisplay words={words} typed={typed} totalTyped={totalTyped} />
-      </div>
+      </Card>
       <Keyboard lastPressedKey={lastPressedKey} keyStats={stats.keyStats} />
     </div>
   );

@@ -12,7 +12,7 @@ type StatsSectionProps = {
 };
 
 const AdPlaceholder = () => (
-    <Card className="flex items-center justify-center h-48 lg:h-full bg-white/30 border-dashed border-2 text-muted-foreground">
+    <Card className="flex items-center justify-center h-48 lg:h-full border-dashed border-2 text-muted-foreground">
         <span>Ad Placeholder</span>
     </Card>
 );

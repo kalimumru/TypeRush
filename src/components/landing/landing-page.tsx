@@ -23,8 +23,8 @@ const LandingPage = () => {
     ];
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-dvh text-center p-4">
-      <header className="flex items-center justify-center py-4 md:py-6 w-full">
+    <div className="flex flex-col items-center min-h-dvh p-4 bg-background">
+      <header className="flex items-center justify-center py-8 md:py-12 w-full">
         <div className="flex items-center gap-3">
             <Keyboard className="w-10 h-10 text-primary" />
             <h1 className="font-headline text-5xl md:text-6xl font-bold text-foreground select-none">
@@ -33,8 +33,8 @@ const LandingPage = () => {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col items-center justify-center">
-        <section className="max-w-4xl mx-auto py-16 md:py-24 animate-in fade-in-50 duration-1000">
+      <main className="flex-1 flex flex-col items-center justify-center text-center">
+        <section className="max-w-4xl mx-auto py-16 md:py-24">
             <h2 className="text-4xl md:text-5xl font-bold font-headline mb-4 text-foreground">
                 The Ultimate Typing Challenge
             </h2>
@@ -42,14 +42,14 @@ const LandingPage = () => {
                 Boost your typing speed and accuracy through a fun, gamified experience. Level up, track your progress, and become a keyboard master.
             </p>
             <Link href="/play">
-              <Button size="lg" className="text-lg px-8 py-6 shadow-lg shadow-primary/20">
+              <Button size="lg" className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-shadow">
                   Start Typing Now
               </Button>
             </Link>
         </section>
         
         <section className="w-full max-w-5xl mx-auto py-8">
-            <div className="h-24 w-full bg-white/30 border-dashed border-2 flex items-center justify-center text-muted-foreground rounded-lg">
+            <div className="h-24 w-full bg-card border-dashed border-2 flex items-center justify-center text-muted-foreground rounded-lg">
                 Ad Banner (728x90)
             </div>
         </section>
@@ -58,8 +58,8 @@ const LandingPage = () => {
         <section className="w-full max-w-5xl mx-auto py-16 md:py-24">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {features.map((feature) => (
-                    <Card key={feature.title} className="bg-white/50 border-white/30 backdrop-blur-lg shadow-lg text-center p-6 transform transition-transform hover:-translate-y-2 hover:shadow-2xl">
-                        <CardContent className="flex flex-col items-center gap-4">
+                    <Card key={feature.title} className="text-center p-6 shadow-md hover:shadow-lg transition-shadow">
+                        <CardContent className="flex flex-col items-center gap-4 pt-6">
                             <div className="p-3 rounded-full bg-primary/10">
                                 {feature.icon}
                             </div>

@@ -33,7 +33,7 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
 
   return (
     <div className="grid grid-cols-1 gap-4 animate-in fade-in-50 duration-500">
-      <Card className="bg-white/50 border-white/30 backdrop-blur-lg shadow-lg">
+      <Card className="shadow-md">
         <CardHeader>
           <CardTitle className="text-lg font-headline text-primary">Level & XP</CardTitle>
         </CardHeader>
@@ -52,7 +52,7 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
         </CardContent>
       </Card>
       
-      <Card className="bg-white/50 border-white/30 backdrop-blur-lg shadow-lg">
+      <Card className="shadow-md">
         <CardHeader>
           <CardTitle className="text-lg font-headline text-primary">Typing Journey</CardTitle>
         </CardHeader>
@@ -70,7 +70,7 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
         </CardContent>
       </Card>
 
-      <Card className="bg-white/50 border-white/30 backdrop-blur-lg shadow-lg">
+      <Card className="shadow-md">
         <CardHeader>
           <CardTitle className="text-lg font-headline text-primary">Badges</CardTitle>
         </CardHeader>

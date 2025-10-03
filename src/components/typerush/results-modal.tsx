@@ -31,7 +31,7 @@ const ResultsModal = ({
 }: ResultsModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onRestart()}>
-      <DialogContent className="bg-background/80 border-border backdrop-blur-md text-foreground shadow-xl">
+      <DialogContent className="text-foreground shadow-xl">
         <DialogHeader>
           <DialogTitle className="font-headline text-3xl text-center text-primary">
             Results

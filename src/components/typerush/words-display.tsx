@@ -22,13 +22,13 @@ const Character = React.memo(({ char, state, isCursor }: { char: string; state: 
     <span
       ref={isCursor ? ref : null}
       className={cn("font-mono text-2xl md:text-3xl transition-colors duration-150 relative", {
-        "text-primary": state === "correct",
-        "text-red-500": state === "incorrect",
+        "text-foreground": state === "correct",
+        "text-destructive": state === "incorrect",
         "text-muted-foreground": state === "untyped",
       })}
     >
       {isCursor && (
-        <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-accent animate-pulse" />
+        <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary animate-pulse" />
       )}
       {char}
     </span>
@@ -49,7 +49,7 @@ const WordsDisplay = ({ words, typed, totalTyped }: WordsDisplayProps) => {
   }, [words, typed]);
 
   return (
-    <div className="w-full h-full p-4 md:p-6 bg-white/50 backdrop-blur-lg rounded-lg overflow-hidden leading-relaxed tracking-wider select-none border border-white/30 shadow-lg">
+    <div className="w-full h-full p-4 md:p-6 rounded-lg overflow-hidden leading-relaxed tracking-wider select-none">
       <div className="text-left whitespace-pre-wrap">
         {characters.map((item, index) => (
           <Character key={index} char={item.char} state={item.state} isCursor={item.isCursor} />

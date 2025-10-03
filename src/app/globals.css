@@ -4,58 +4,58 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
+    --background: 220 13% 96%;
     --foreground: 222 84% 5%;
-    --card: 210 40% 98%;
+    --card: 220 13% 100%;
     --card-foreground: 222 84% 5%;
-    --popover: 210 40% 98%;
+    --popover: 220 13% 100%;
     --popover-foreground: 222 84% 5%;
-    --primary: 257 93% 66%;
+    --primary: 211 78% 52%; /* Material Blue 700 */
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 91%;
+    --secondary: 220 10% 90%;
     --secondary-foreground: 222 84% 5%;
-    --muted: 210 40% 89%;
+    --muted: 220 10% 90%;
     --muted-foreground: 215 28% 45%;
-    --accent: 180 100% 40%;
+    --accent: 337 79% 43%; /* Material Pink 700 */
     --accent-foreground: 210 40% 98%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 257 93% 66%;
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 211 78% 52%;
     --radius: 0.5rem;
-    --chart-1: 257 93% 66%;
-    --chart-2: 180 100% 40%;
-    --chart-3: 320 80% 60%;
-    --chart-4: 43 74% 66%;
+    --chart-1: 211 78% 52%;
+    --chart-2: 337 79% 43%;
+    --chart-3: 282 44% 53%; /* Material Purple 500 */
+    --chart-4: 145 58% 39%; /* Material Green 700 */
     --chart-5: 27 87% 67%;
   }
 
   .dark {
-    --background: 226 23% 17%;
+    --background: 226 23% 11%;
     --foreground: 210 40% 98%;
-    --card: 226 23% 20%;
+    --card: 226 23% 14%;
     --card-foreground: 210 40% 98%;
-    --popover: 226 23% 17%;
+    --popover: 226 23% 11%;
     --popover-foreground: 210 40% 98%;
-    --primary: 257 100% 59%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 226 23% 25%;
+    --primary: 211 88% 68%; /* Material Blue 300 */
+    --primary-foreground: 222 84% 5%;
+    --secondary: 226 23% 20%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 226 23% 25%;
+    --muted: 226 23% 20%;
     --muted-foreground: 210 20% 65%;
-    --accent: 180 100% 50%;
-    --accent-foreground: 226 23% 10%;
+    --accent: 337 88% 75%; /* Material Pink 300 */
+    --accent-foreground: 222 84% 5%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
-    --border: 226 23% 25%;
-    --input: 226 23% 25%;
-    --ring: 180 100% 50%;
+    --border: 226 23% 20%;
+    --input: 226 23% 20%;
+    --ring: 211 88% 68%;
     --radius: 0.5rem;
-    --chart-1: 257 100% 59%;
-    --chart-2: 180 100% 50%;
-    --chart-3: 320 80% 60%;
-    --chart-4: 43 74% 66%;
+    --chart-1: 211 88% 68%;
+    --chart-2: 337 88% 75%;
+    --chart-3: 282 44% 53%;
+    --chart-4: 145 58% 39%;
     --chart-5: 27 87% 67%;
   }
 }

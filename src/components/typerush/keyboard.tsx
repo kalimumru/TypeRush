@@ -52,16 +52,16 @@ const Keyboard = ({ lastPressedKey, keyStats }: KeyboardProps) => {
 
   const getPerfColor = (char: string) => {
     const stat = keyStats[char.toLowerCase()];
-    if (!stat || stat.count < 5) return 'bg-white/40'; // Neutral for not enough data
+    if (!stat || stat.count < 5) return 'bg-card'; // Neutral for not enough data
     const accuracy = (stat.count - stat.errors) / stat.count;
-    if (accuracy > 0.95) return 'bg-green-500/30';
-    if (accuracy > 0.85) return 'bg-yellow-500/30';
-    return 'bg-red-500/30';
+    if (accuracy > 0.95) return 'bg-green-500/20';
+    if (accuracy > 0.85) return 'bg-yellow-500/20';
+    return 'bg-red-500/20';
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-2 md:p-4 rounded-lg bg-white/30 backdrop-blur-lg shadow-inner" style={{ perspective: '1200px' }}>
-      <div className="space-y-1 md:space-y-2" style={{ transform: 'rotateX(10deg)' }}>
+    <div className="w-full max-w-4xl mx-auto p-2 md:p-4 rounded-lg bg-card shadow-lg" >
+      <div className="space-y-1 md:space-y-2">
         {keyLayout.map((row, rowIndex) => (
           <div key={rowIndex} className="flex justify-center gap-1 md:gap-2">
             {row.map((key, keyIndex) => {
@@ -71,20 +71,20 @@ const Keyboard = ({ lastPressedKey, keyStats }: KeyboardProps) => {
               const displayKey = key.startsWith('Shift') ? 'Shift' : key;
               
               const keyClass = cn(
-                "flex items-center justify-center rounded-md md:rounded-lg text-xs md:text-sm font-sans uppercase transition-all duration-150 ease-out shadow-md",
-                "border-b-2 md:border-b-4 border-black/10 text-neutral-700",
+                "flex items-center justify-center rounded-md md:rounded-lg text-xs md:text-sm font-sans uppercase transition-all duration-75",
+                "border-b-2 md:border-b-4 border-black/10 text-card-foreground",
                 {
                   'w-12 h-10 md:w-24 md:h-12': key === 'Backspace',
                   'w-16 h-10 md:w-32 md:h-12': key === 'Tab' || key === 'Enter',
                   'w-20 h-10 md:w-40 md:h-12': key === 'CapsLock' || key.startsWith('Shift'),
                   'flex-1 h-10 md:h-12': key === ' ',
                   'w-8 h-10 md:w-12 md:h-12': key.length === 1,
-                  'transform -translate-y-px': !isActive,
-                  'transform translate-y-0.5 border-b-2 shadow-inner': isActive,
+                  'transform scale-100 shadow-sm': !isActive,
+                  'transform scale-95 shadow-inner': isActive,
                 },
-                key.length === 1 ? getPerfColor(key) : 'bg-white/40',
-                isActive && "bg-primary text-white scale-105 shadow-primary/40",
-                key === " " ? "bg-white/20" : ""
+                key.length === 1 ? getPerfColor(key) : 'bg-secondary',
+                isActive && "bg-primary text-primary-foreground scale-105",
+                key === " " ? "bg-secondary" : ""
               );
               
               return (
