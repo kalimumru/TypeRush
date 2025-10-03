@@ -4,8 +4,9 @@ import WordsDisplay from "./words-display";
 import Keyboard from "./keyboard";
 import type { GameState, UserStats } from "@/lib/types";
 import { Button } from "../ui/button";
-import { Play } from "lucide-react";
+import { Play, Timer } from "lucide-react";
 import { Card } from "../ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type TypingSectionProps = {
   words: string;
@@ -15,6 +16,8 @@ type TypingSectionProps = {
   stats: UserStats;
   onStart: () => void;
   state: GameState;
+  duration: number;
+  onDurationChange: (duration: number) => void;
 };
 
 const TypingSection = ({
@@ -24,7 +27,9 @@ const TypingSection = ({
   lastPressedKey,
   stats,
   onStart,
-  state
+  state,
+  duration,
+  onDurationChange,
 }: TypingSectionProps) => {
   return (
     <div className="flex-1 flex flex-col justify-center items-center gap-8 w-full p-4">
@@ -33,9 +38,26 @@ const TypingSection = ({
            <div className="absolute inset-0 flex flex-col items-center justify-center bg-card/80 backdrop-blur-sm rounded-lg z-10 animate-in fade-in">
              <h2 className="text-2xl font-headline text-primary">Start Typing Test</h2>
              <p className="text-muted-foreground mb-4">Click the button to begin.</p>
-             <Button size="lg" onClick={onStart}>
-               <Play className="mr-2" /> Start
-             </Button>
+             <div className="flex items-center gap-4">
+                <Select
+                    value={String(duration)}
+                    onValueChange={(value) => onDurationChange(Number(value))}
+                >
+                    <SelectTrigger className="w-[180px] bg-background">
+                        <Timer className="mr-2 h-4 w-4" />
+                        <SelectValue placeholder="Select time" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="15">15 seconds</SelectItem>
+                        <SelectItem value="30">30 seconds</SelectItem>
+                        <SelectItem value="60">60 seconds</SelectItem>
+                        <SelectItem value="120">120 seconds</SelectItem>
+                    </SelectContent>
+                </Select>
+                <Button size="lg" onClick={onStart}>
+                    <Play className="mr-2" /> Start
+                </Button>
+            </div>
            </div>
         ) : null}
         <WordsDisplay words={words} typed={typed} totalTyped={totalTyped} />

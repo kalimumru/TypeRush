@@ -5,12 +5,13 @@ import Header from "./header";
 import TypingSection from "./typing-section";
 import StatsSection from "./stats-section";
 import ResultsModal from "./results-modal";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Trophy } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import GameStats from "./game-stats";
 
 const TyperushContainer = () => {
+  const [duration, setDuration] = useState(30);
   const {
     state,
     words,
@@ -26,7 +27,7 @@ const TyperushContainer = () => {
     startGame,
     xpGained,
     levelUp,
-  } = useEngine();
+  } = useEngine({ duration });
   
   const { toast } = useToast();
 
@@ -59,6 +60,8 @@ const TyperushContainer = () => {
               stats={stats}
               onStart={startGame}
               state={state}
+              duration={duration}
+              onDurationChange={setDuration}
             />
         </div>
         <div className="hidden lg:block lg:col-span-3">

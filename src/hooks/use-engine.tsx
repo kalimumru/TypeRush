@@ -5,7 +5,6 @@ import { generateWords } from '@/lib/word-generator';
 import type { GameState, UserStats } from '@/lib/types';
 import { loadUserData, saveUserData } from '@/lib/user-data';
 
-const GAME_TIME = 30; // 30 seconds for a quick game
 const WORDS_COUNT = 50;
 
 const defaultStats: UserStats = {
@@ -19,14 +18,19 @@ const defaultStats: UserStats = {
   keyStats: {},
 };
 
+type EngineOptions = {
+  duration?: number;
+};
 
-const useEngine = () => {
+const useEngine = (options?: EngineOptions) => {
+  const gameTime = options?.duration || 30;
+
   const [state, setState] = useState<GameState>('waiting');
   const [words, setWords] = useState('');
   const [typed, setTyped] = useState('');
   const [errors, setErrors] = useState<Set<number>>(new Set());
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [timeLeft, setTimeLeft] = useState(GAME_TIME);
+  const [timeLeft, setTimeLeft] = useState(gameTime);
   const [lastPressedKey, setLastPressedKey] = useState<string | null>(null);
   const [stats, setStats] = useState<UserStats>(defaultStats);
   const [isMounted, setIsMounted] = useState(false);
@@ -37,7 +41,8 @@ const useEngine = () => {
   useEffect(() => {
     setIsMounted(true);
     setStats(loadUserData());
-  }, []);
+    setTimeLeft(gameTime);
+  }, [gameTime]);
   
   useEffect(() => {
     if(isMounted) {
@@ -71,9 +76,9 @@ const useEngine = () => {
     prepareWords();
     setState('running');
     setStartTime(Date.now());
-    setTimeLeft(GAME_TIME);
+    setTimeLeft(gameTime);
     setLevelUp(false);
-  }, [prepareWords]);
+  }, [prepareWords, gameTime]);
 
   const restart = useCallback(() => {
     setState('waiting');
@@ -119,7 +124,7 @@ const useEngine = () => {
     if (state === 'running') {
       const timer = setInterval(() => {
         const timeElapsed = (Date.now() - (startTime ?? Date.now())) / 1000;
-        const newTimeLeft = Math.max(0, GAME_TIME - Math.floor(timeElapsed));
+        const newTimeLeft = Math.max(0, gameTime - Math.floor(timeElapsed));
         setTimeLeft(newTimeLeft);
 
         if (newTimeLeft === 0) {
@@ -129,7 +134,7 @@ const useEngine = () => {
       }, 1000);
       return () => clearInterval(timer);
     }
-  }, [state, startTime, finishGame]);
+  }, [state, startTime, finishGame, gameTime]);
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (state !== 'running' || typed.length >= words.length) return;
@@ -173,7 +178,7 @@ const useEngine = () => {
       errors: new Set(), 
       wpm: 0, 
       accuracy: 100, 
-      timeLeft: GAME_TIME, 
+      timeLeft: gameTime, 
       lastPressedKey: null, 
       stats: defaultStats, 
       totalTyped: 0, 
