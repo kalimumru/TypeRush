@@ -47,6 +47,13 @@ const LandingPage = () => {
               </Button>
             </Link>
         </section>
+        
+        <section className="w-full max-w-5xl mx-auto py-8">
+            <div className="h-24 w-full bg-white/30 border-dashed border-2 flex items-center justify-center text-muted-foreground rounded-lg">
+                Ad Banner (728x90)
+            </div>
+        </section>
+
 
         <section className="w-full max-w-5xl mx-auto py-16 md:py-24">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
