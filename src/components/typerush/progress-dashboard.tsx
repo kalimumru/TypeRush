@@ -16,11 +16,11 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
   const xpProgress = (stats.xp / xpForNextLevel) * 100;
 
   const badges = [
-    { icon: Zap, name: "Speed Demon", unlocked: stats.wpm > 80 },
-    { icon: Target, name: "Accuracy Master", unlocked: stats.accuracy > 98 },
-    { icon: Calendar, name: "Consistent Coder", unlocked: stats.streaks > 7 },
-    { icon: BarChart, name: "Level 10", unlocked: stats.level >= 10 },
-    { icon: Award, name: "First Steps", unlocked: true },
+    { icon: Zap, name: "Speed Demon", unlocked: stats.wpm > 80, description: "Reach over 80 WPM" },
+    { icon: Target, name: "Accuracy Master", unlocked: stats.accuracy > 98, description: "Achieve 99% accuracy" },
+    { icon: Calendar, name: "Consistent Coder", unlocked: stats.streaks > 7, description: "Complete a 7-day streak" },
+    { icon: BarChart, name: "Level 10", unlocked: stats.level >= 10, description: "Reach level 10" },
+    { icon: Award, name: "First Steps", unlocked: true, description: "Complete your first game" },
   ];
 
   const journey = [
@@ -76,16 +76,18 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
         </CardHeader>
         <CardContent>
           <TooltipProvider>
-            <div className="grid grid-cols-4 gap-4">
+            <div className="grid grid-cols-3 gap-4 text-center">
               {badges.map((badge) => (
                 <Tooltip key={badge.name}>
-                  <TooltipTrigger>
-                    <div className={`aspect-square rounded-md flex items-center justify-center transition-all ${badge.unlocked ? 'bg-primary/20 text-primary shadow-sm' : 'bg-secondary text-muted-foreground'}`}>
-                      <badge.icon className="w-6 h-6" />
+                  <TooltipTrigger className="flex flex-col items-center gap-1">
+                    <div className={`w-14 h-14 rounded-lg flex items-center justify-center transition-all ${badge.unlocked ? 'bg-primary/20 text-primary shadow-sm' : 'bg-secondary text-muted-foreground/50'}`}>
+                      <badge.icon className="w-7 h-7" />
                     </div>
+                    <p className={`text-xs font-medium truncate ${badge.unlocked ? 'text-foreground' : 'text-muted-foreground/60'}`}>{badge.name}</p>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{badge.name}</p>
+                    <p className="font-semibold">{badge.name}</p>
+                    <p className="text-sm text-muted-foreground">{badge.description}</p>
                   </TooltipContent>
                 </Tooltip>
               ))}
