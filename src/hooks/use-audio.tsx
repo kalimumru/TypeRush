@@ -5,8 +5,6 @@ import { useState, useCallback, useEffect } from 'react';
 const useAudio = () => {
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const [buffers, setBuffers] = useState<Record<string, AudioBuffer>>({});
-  const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(0.5);
 
   const soundFiles = {
     correct: 'https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg',
@@ -44,7 +42,7 @@ const useAudio = () => {
 
   const playSound = useCallback(
     (key: string) => {
-      if (!audioContext || !buffers[key] || isMuted) return;
+      if (!audioContext || !buffers[key]) return;
 
       // Resume context if it's suspended (e.g., due to browser autoplay policies)
       if (audioContext.state === 'suspended') {
@@ -53,41 +51,22 @@ const useAudio = () => {
 
       const source = audioContext.createBufferSource();
       source.buffer = buffers[key];
-
-      const gainNode = audioContext.createGain();
-      gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
       
-      source.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+      source.connect(audioContext.destination);
 
       source.start(0);
     },
-    [audioContext, buffers, isMuted, volume]
+    [audioContext, buffers]
   );
 
   const playCorrect = useCallback(() => playSound('correct'), [playSound]);
   const playError = useCallback(() => playSound('error'), [playSound]);
   const playLevelUp = useCallback(() => playSound('levelUp'), [playSound]);
 
-  const toggleMute = useCallback(() => {
-    setIsMuted(prev => !prev);
-  }, []);
-
-  const handleSetVolume = useCallback((newVolume: number) => {
-    setVolume(newVolume);
-    if (isMuted && newVolume > 0) {
-      setIsMuted(false);
-    }
-  }, [isMuted]);
-
   return {
     playCorrect,
     playError,
     playLevelUp,
-    setVolume: handleSetVolume,
-    volume,
-    toggleMute,
-    isMuted,
   };
 };
 
