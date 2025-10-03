@@ -8,7 +8,7 @@ import ResultsModal from "./results-modal";
 import { useEffect } from "react";
 import { Trophy } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
-import ProgressDashboard from "./progress-dashboard";
+import GameStats from "./game-stats";
 
 const TyperushContainer = () => {
   const {
@@ -47,8 +47,8 @@ const TyperushContainer = () => {
         <Header />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-12 justify-center items-start gap-4 flex-1 w-full mt-4">
-        <div className="hidden lg:block lg:col-span-3">
-           <ProgressDashboard stats={stats} />
+        <div className="w-full lg:col-span-3">
+             <GameStats state={state} stats={stats} wpm={wpm} accuracy={accuracy} timeLeft={timeLeft} />
         </div>
         <div className="lg:col-span-6">
             <TypingSection
@@ -61,8 +61,8 @@ const TyperushContainer = () => {
               state={state}
             />
         </div>
-        <div className="w-full lg:col-span-3">
-            <StatsSection
+        <div className="hidden lg:block lg:col-span-3">
+          <StatsSection
               state={state}
               wpm={wpm}
               accuracy={accuracy}
