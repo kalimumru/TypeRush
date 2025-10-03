@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ProgressCircle } from "@/components/ui/progress-circle";
-import { CheckCircle, RefreshCw, XCircle } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 
 type ResultsModalProps = {
   isOpen: boolean;
@@ -31,9 +31,9 @@ const ResultsModal = ({
 }: ResultsModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onRestart()}>
-      <DialogContent className="bg-background/80 border-primary/50 backdrop-blur-md text-foreground">
+      <DialogContent className="bg-background/80 border-border backdrop-blur-md text-foreground shadow-xl">
         <DialogHeader>
-          <DialogTitle className="font-headline text-3xl text-center text-glow-primary">
+          <DialogTitle className="font-headline text-3xl text-center text-primary">
             Results
           </DialogTitle>
           <DialogDescription className="text-center">
@@ -43,14 +43,14 @@ const ResultsModal = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6">
           <div className="flex flex-col items-center justify-center gap-2">
             <span className="text-muted-foreground">WPM</span>
-            <span className="text-6xl font-bold font-headline text-glow-accent">
+            <span className="text-6xl font-bold font-headline text-foreground">
               {wpm}
             </span>
           </div>
           <div className="flex flex-col items-center justify-center gap-2">
              <div className="relative">
               <ProgressCircle value={accuracy} size={100} strokeWidth={8} />
-              <div className="absolute inset-0 flex items-center justify-center font-headline text-2xl font-bold text-glow-accent">
+              <div className="absolute inset-0 flex items-center justify-center font-headline text-2xl font-bold text-foreground">
                 {accuracy}%
               </div>
             </div>
@@ -66,13 +66,13 @@ const ResultsModal = ({
                   <span className="text-xs text-muted-foreground">Errors</span>
               </div>
               <div className="flex flex-col items-center gap-1">
-                  <span className="font-bold text-xl text-green-400">+{xpGained.toFixed(0)}</span>
+                  <span className="font-bold text-xl text-green-500">+{xpGained.toFixed(0)}</span>
                   <span className="text-xs text-muted-foreground">XP Gained</span>
               </div>
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={onRestart} className="w-full" variant="outline">
+          <Button onClick={onRestart} className="w-full">
             <RefreshCw className="mr-2 h-4 w-4" />
             Try Again
           </Button>

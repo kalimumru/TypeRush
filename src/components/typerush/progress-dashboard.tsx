@@ -33,16 +33,16 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
 
   return (
     <div className="grid grid-cols-1 gap-4 animate-in fade-in-50 duration-500">
-      <Card className="bg-black/20 border-white/10 backdrop-blur-sm">
+      <Card className="bg-white/50 border-white/30 backdrop-blur-lg shadow-lg">
         <CardHeader>
-          <CardTitle className="text-lg font-headline text-accent">Level & XP</CardTitle>
+          <CardTitle className="text-lg font-headline text-primary">Level & XP</CardTitle>
         </CardHeader>
         <CardContent className="flex items-center gap-4">
           <div className="relative">
             <ProgressCircle value={xpProgress} size={80} strokeWidth={8} />
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <span className="text-xs text-muted-foreground">LVL</span>
-              <span className="font-headline text-xl font-bold text-glow-primary">{stats.level}</span>
+              <span className="font-headline text-xl font-bold text-foreground">{stats.level}</span>
             </div>
           </div>
           <div className="flex-1">
@@ -52,9 +52,9 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
         </CardContent>
       </Card>
       
-      <Card className="bg-black/20 border-white/10 backdrop-blur-sm">
+      <Card className="bg-white/50 border-white/30 backdrop-blur-lg shadow-lg">
         <CardHeader>
-          <CardTitle className="text-lg font-headline text-accent">Typing Journey</CardTitle>
+          <CardTitle className="text-lg font-headline text-primary">Typing Journey</CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="space-y-3">
@@ -70,9 +70,9 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
         </CardContent>
       </Card>
 
-      <Card className="bg-black/20 border-white/10 backdrop-blur-sm">
+      <Card className="bg-white/50 border-white/30 backdrop-blur-lg shadow-lg">
         <CardHeader>
-          <CardTitle className="text-lg font-headline text-accent">Badges</CardTitle>
+          <CardTitle className="text-lg font-headline text-primary">Badges</CardTitle>
         </CardHeader>
         <CardContent>
           <TooltipProvider>
@@ -80,7 +80,7 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
               {badges.map((badge) => (
                 <Tooltip key={badge.name}>
                   <TooltipTrigger>
-                    <div className={`aspect-square rounded-md flex items-center justify-center transition-all ${badge.unlocked ? 'bg-primary/20 text-accent box-glow-accent' : 'bg-secondary/20 text-muted-foreground'}`}>
+                    <div className={`aspect-square rounded-md flex items-center justify-center transition-all ${badge.unlocked ? 'bg-primary/20 text-primary shadow-sm' : 'bg-secondary text-muted-foreground'}`}>
                       <badge.icon className="w-6 h-6" />
                     </div>
                   </TooltipTrigger>

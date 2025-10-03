@@ -14,7 +14,7 @@ const Character = React.memo(({ char, state, isCursor }: { char: string; state: 
 
   useEffect(() => {
     if (isCursor && ref.current) {
-      ref.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
     }
   }, [isCursor]);
 
@@ -49,7 +49,7 @@ const WordsDisplay = ({ words, typed, totalTyped }: WordsDisplayProps) => {
   }, [words, typed]);
 
   return (
-    <div className="w-full h-full p-4 md:p-6 bg-black/20 rounded-lg overflow-hidden leading-relaxed tracking-wider select-none border border-white/10">
+    <div className="w-full h-full p-4 md:p-6 bg-white/50 backdrop-blur-lg rounded-lg overflow-hidden leading-relaxed tracking-wider select-none border border-white/30 shadow-lg">
       <div className="text-left whitespace-pre-wrap">
         {characters.map((item, index) => (
           <Character key={index} char={item.char} state={item.state} isCursor={item.isCursor} />
