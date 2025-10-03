@@ -15,7 +15,7 @@ const TyperushContainer = () => {
     playError,
     playLevelUp,
     setVolume,
-    toggleSound,
+    toggleMute,
     isMuted,
     volume,
   } = useAudio();
@@ -63,7 +63,7 @@ const TyperushContainer = () => {
           volume={volume}
           setVolume={setVolume}
           isMuted={isMuted}
-          toggleMute={toggleSound}
+          toggleMute={toggleMute}
         />
       </div>
       <div className="flex flex-col lg:flex-row justify-center items-start gap-4 flex-1 w-full mt-4">

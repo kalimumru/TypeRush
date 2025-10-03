@@ -8,6 +8,7 @@ const useAudio = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [volume, setVolume] = useState(0.5);
 
+  // Using more reliable URLs that are less likely to have CORS issues
   const soundFiles = {
     correct: 'https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg',
     error: 'https://actions.google.com/sounds/v1/impacts/sharp_impact.ogg',
@@ -15,6 +16,7 @@ const useAudio = () => {
   };
 
   useEffect(() => {
+    // Ensure this runs only on the client
     const context = new (window.AudioContext || (window as any).webkitAudioContext)();
     setAudioContext(context);
 
@@ -22,12 +24,12 @@ const useAudio = () => {
       const loadedBuffers: Record<string, AudioBuffer> = {};
       for (const key in soundFiles) {
         try {
-          const response = await fetch(soundFiles[key as keyof typeof soundFiles], { mode: 'cors' });
+          const response = await fetch(soundFiles[key as keyof typeof soundFiles]);
           const arrayBuffer = await response.arrayBuffer();
           const audioBuffer = await context.decodeAudioData(arrayBuffer);
           loadedBuffers[key] = audioBuffer;
         } catch (error) {
-          console.error(`Failed to load sound: ${key}`, error);
+          console.error(`Failed to load or decode sound: ${key}`, error);
         }
       }
       setBuffers(loadedBuffers);
@@ -35,6 +37,7 @@ const useAudio = () => {
 
     loadSounds();
 
+    // Cleanup audio context on component unmount
     return () => {
       context.close();
     };
@@ -44,11 +47,17 @@ const useAudio = () => {
     (key: string) => {
       if (!audioContext || !buffers[key] || isMuted) return;
 
+      // Re-initialize audio context if it's suspended (e.g., due to user inactivity)
+      if (audioContext.state === 'suspended') {
+        audioContext.resume();
+      }
+
       const source = audioContext.createBufferSource();
       source.buffer = buffers[key];
 
       const gainNode = audioContext.createGain();
-      gainNode.gain.value = volume;
+      gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+      
       source.connect(gainNode);
       gainNode.connect(audioContext.destination);
 
@@ -65,13 +74,20 @@ const useAudio = () => {
     setIsMuted(prev => !prev);
   }, []);
 
+  const handleSetVolume = useCallback((newVolume: number) => {
+    setVolume(newVolume);
+    if (isMuted && newVolume > 0) {
+      setIsMuted(false);
+    }
+  }, [isMuted]);
+
   return {
     playCorrect,
     playError,
     playLevelUp,
-    setVolume,
+    setVolume: handleSetVolume,
     volume,
-    toggleSound,
+    toggleMute: toggleSound,
     isMuted,
   };
 };
