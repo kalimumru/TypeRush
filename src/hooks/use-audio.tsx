@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 const useAudio = () => {
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
@@ -15,6 +15,7 @@ const useAudio = () => {
   };
 
   useEffect(() => {
+    // AudioContext can only be created on the client
     const context = new (window.AudioContext || (window as any).webkitAudioContext)();
     setAudioContext(context);
 
@@ -45,6 +46,7 @@ const useAudio = () => {
     (key: string) => {
       if (!audioContext || !buffers[key] || isMuted) return;
 
+      // Resume context if it's suspended (e.g., due to browser autoplay policies)
       if (audioContext.state === 'suspended') {
         audioContext.resume();
       }
