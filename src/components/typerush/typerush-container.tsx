@@ -8,6 +8,8 @@ import StatsSection from "./stats-section";
 import ResultsModal from "./results-modal";
 import AudioSettings from "./audio-settings";
 import { useEffect } from "react";
+import { Trophy } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
 
 const TyperushContainer = () => {
   const {
@@ -37,6 +39,8 @@ const TyperushContainer = () => {
     isNewKeyCorrect,
     levelUp,
   } = useEngine();
+  
+  const { toast } = useToast();
 
   useEffect(() => {
     if (state === "running") {
@@ -51,8 +55,13 @@ const TyperushContainer = () => {
   useEffect(() => {
     if (levelUp) {
       playLevelUp();
+      toast({
+        title: "Level Up!",
+        description: `Congratulations! You've reached level ${stats.level}.`,
+        action: <Trophy className="text-yellow-400" />,
+      });
     }
-  }, [levelUp, playLevelUp]);
+  }, [levelUp, playLevelUp, stats.level, toast]);
 
 
   return (

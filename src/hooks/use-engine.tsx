@@ -1,13 +1,9 @@
-
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { generateWords } from '@/lib/word-generator';
 import type { GameState, UserStats } from '@/lib/types';
-import { useToast } from "@/hooks/use-toast";
 import { loadUserData, saveUserData } from '@/lib/user-data';
-import { Trophy } from 'lucide-react';
-import React from 'react';
 
 const GAME_TIME = 30; // 30 seconds for a quick game
 const WORDS_COUNT = 50;
@@ -38,12 +34,16 @@ const useEngine = () => {
   const [isNewKeyCorrect, setIsNewKeyCorrect] = useState<boolean | null>(null);
   const [levelUp, setLevelUp] = useState(false);
 
-  const { toast } = useToast();
-
   useEffect(() => {
     setIsMounted(true);
     setStats(loadUserData());
   }, []);
+  
+  useEffect(() => {
+    if(isMounted) {
+      saveUserData(stats);
+    }
+  }, [stats, isMounted]);
 
   const totalTyped = useMemo(() => typed.length, [typed]);
   const wpm = useMemo(() => {
@@ -110,20 +110,9 @@ const useEngine = () => {
         xp: currentXp,
       };
 
-      saveUserData(updatedStats);
       return updatedStats;
     });
   }, [startTime, totalTyped, accuracy]);
-
-  useEffect(() => {
-    if (levelUp) {
-       toast({
-          title: "Level Up!",
-          description: `Congratulations! You've reached level ${stats.level}.`,
-          action: <Trophy className="text-yellow-400" />,
-        });
-    }
-  }, [levelUp, stats.level, toast]);
 
 
   useEffect(() => {

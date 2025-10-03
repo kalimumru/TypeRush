@@ -66,6 +66,7 @@ const Keyboard = ({ lastPressedKey, keyStats }: KeyboardProps) => {
           <div key={rowIndex} className="flex justify-center gap-1 md:gap-2">
             {row.map((key, keyIndex) => {
               const keyId = getKeyId(key);
+              const uniqueKey = `${keyId}-${keyIndex}`;
               const isActive = activeKey === keyId;
               const displayKey = key.startsWith('Shift') ? 'Shift' : key;
               
@@ -87,7 +88,7 @@ const Keyboard = ({ lastPressedKey, keyStats }: KeyboardProps) => {
               );
               
               return (
-                <div key={`${keyId}-${keyIndex}`} id={keyId} className={keyClass}>
+                <div key={uniqueKey} id={keyId} className={keyClass}>
                   {displayKey !== ' ' ? displayKey : 'Space'}
                 </div>
               );

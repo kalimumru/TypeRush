@@ -1,4 +1,3 @@
-
 import TyperushContainer from '@/components/typerush/typerush-container';
 
 export default function PlayPage() {
