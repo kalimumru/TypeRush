@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { BarChart2, Gamepad2, Keyboard, Zap } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 const LandingPage = () => {
@@ -22,6 +24,8 @@ const LandingPage = () => {
       },
     ];
 
+    const studentImage = PlaceHolderImages.find(p => p.id === 'student-typing');
+
   return (
     <div className="flex flex-col items-center min-h-dvh p-4 bg-background">
       <header className="flex items-center justify-center py-8 md:py-12 w-full">
@@ -34,18 +38,32 @@ const LandingPage = () => {
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center text-center">
-        <section className="max-w-4xl mx-auto py-16 md:py-24">
-            <h2 className="text-4xl md:text-5xl font-bold font-headline mb-4 text-foreground">
-                The Ultimate Typing Challenge
-            </h2>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
-                Boost your typing speed and accuracy through a fun, gamified experience. Level up, track your progress, and become a keyboard master.
-            </p>
-            <Link href="/play">
-              <Button size="lg" className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-shadow">
-                  Start Typing Now
-              </Button>
-            </Link>
+        <section className="max-w-4xl mx-auto py-16 md:py-24 grid md:grid-cols-2 md:items-center gap-12">
+            <div className="text-center md:text-left">
+                <h2 className="text-4xl md:text-5xl font-bold font-headline mb-4 text-foreground">
+                    The Ultimate Typing Challenge
+                </h2>
+                <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto md:mx-0 mb-8">
+                    Boost your typing speed and accuracy through a fun, gamified experience. Level up, track your progress, and become a keyboard master.
+                </p>
+                <Link href="/play">
+                  <Button size="lg" className="text-lg px-8 py-6 shadow-lg hover:shadow-xl transition-shadow">
+                      Start Typing Now
+                  </Button>
+                </Link>
+            </div>
+            {studentImage && (
+              <div className="flex justify-center">
+                  <Image 
+                    src={studentImage.imageUrl} 
+                    alt={studentImage.description}
+                    width={600}
+                    height={400}
+                    className="rounded-lg shadow-xl"
+                    data-ai-hint={studentImage.imageHint}
+                  />
+              </div>
+            )}
         </section>
         
         <section className="w-full max-w-5xl mx-auto py-8">
