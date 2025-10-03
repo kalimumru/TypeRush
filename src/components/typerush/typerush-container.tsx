@@ -8,6 +8,7 @@ import ResultsModal from "./results-modal";
 import { useEffect } from "react";
 import { Trophy } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
+import ProgressDashboard from "./progress-dashboard";
 
 const TyperushContainer = () => {
   const {
@@ -24,7 +25,6 @@ const TyperushContainer = () => {
     restart,
     startGame,
     xpGained,
-    isNewKeyCorrect,
     levelUp,
   } = useEngine();
   
@@ -46,24 +46,30 @@ const TyperushContainer = () => {
       <div className="w-full flex justify-center items-center">
         <Header />
       </div>
-      <div className="flex flex-col lg:flex-row justify-center items-start gap-4 flex-1 w-full mt-4">
-        <TypingSection
-          words={words}
-          typed={typed}
-          totalTyped={totalTyped}
-          lastPressedKey={lastPressedKey}
-          stats={stats}
-          onStart={startGame}
-          state={state}
-        />
-        <div className="hidden lg:block w-px bg-border h-96 self-center"></div>
-        <StatsSection
-          state={state}
-          wpm={wpm}
-          accuracy={accuracy}
-          timeLeft={timeLeft}
-          stats={stats}
-        />
+      <div className="grid grid-cols-1 lg:grid-cols-12 justify-center items-start gap-4 flex-1 w-full mt-4">
+        <div className="hidden lg:block lg:col-span-3">
+           <ProgressDashboard stats={stats} />
+        </div>
+        <div className="lg:col-span-6">
+            <TypingSection
+              words={words}
+              typed={typed}
+              totalTyped={totalTyped}
+              lastPressedKey={lastPressedKey}
+              stats={stats}
+              onStart={startGame}
+              state={state}
+            />
+        </div>
+        <div className="w-full lg:col-span-3">
+            <StatsSection
+              state={state}
+              wpm={wpm}
+              accuracy={accuracy}
+              timeLeft={timeLeft}
+              stats={stats}
+            />
+        </div>
       </div>
       {state === "finished" && (
         <ResultsModal

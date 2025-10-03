@@ -2,7 +2,6 @@
 
 import { GameState, UserStats } from "@/lib/types";
 import LiveStats from "./live-stats";
-import ProgressDashboard from "./progress-dashboard";
 import { Card } from "../ui/card";
 
 type StatsSectionProps = {
@@ -22,13 +21,11 @@ const AdPlaceholder = () => (
 
 const StatsSection = ({ state, wpm, accuracy, timeLeft, stats }: StatsSectionProps) => {
   return (
-    <div className="w-full lg:w-96 p-4 flex flex-col gap-4">
-      {state === 'running' ? (
+    <div className="w-full flex flex-col gap-4">
+      {state === 'running' && (
         <LiveStats wpm={wpm} accuracy={accuracy} timeLeft={timeLeft} />
-      ) : (
-        <ProgressDashboard stats={stats} />
       )}
-      <div className="hidden lg:block flex-grow mt-4">
+      <div className="flex-grow mt-4">
         <AdPlaceholder />
       </div>
     </div>
