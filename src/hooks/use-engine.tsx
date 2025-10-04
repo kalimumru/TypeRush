@@ -89,9 +89,11 @@ const useEngine = (options?: EngineOptions) => {
   }, []);
 
   const finishGame = useCallback(() => {
+    if (state === 'finished' || !startTime) return;
+
     setState('finished');
-    const timeElapsed = gameTime;
-    const finalWpm = Math.round(((totalTyped / 5) / timeElapsed) * 60);
+    const timeElapsedInSeconds = (Date.now() - startTime) / 1000;
+    const finalWpm = Math.round(((totalTyped / 5) / timeElapsedInSeconds) * 60);
     const finalAccuracy = accuracy;
 
     const newXp = (finalWpm * 0.5) + (finalAccuracy * 0.2);
@@ -119,7 +121,7 @@ const useEngine = (options?: EngineOptions) => {
 
       return updatedStats;
     });
-  }, [totalTyped, accuracy, gameTime]);
+  }, [state, startTime, totalTyped, accuracy]);
 
 
   useEffect(() => {
@@ -131,21 +133,14 @@ const useEngine = (options?: EngineOptions) => {
         setTimeLeft(newTimeLeft);
 
         if (newTimeLeft <= 0) {
-            // Directly call finishGame logic here or wrap it to be stable
-            setState('finished');
+            finishGame();
         }
       }, 1000);
     }
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [state, startTime, gameTime]);
-  
-  useEffect(() => {
-    if (state === 'finished') {
-        finishGame();
-    }
-  }, [state, finishGame]);
+  }, [state, startTime, gameTime, finishGame]);
 
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -173,9 +168,15 @@ const useEngine = (options?: EngineOptions) => {
       } else {
         setIsNewKeyCorrect(true);
       }
-      setTyped(prev => prev + key);
+      
+      const newTyped = typed + key;
+      setTyped(newTyped);
+
+      if (newTyped.length === words.length) {
+        finishGame();
+      }
     }
-  }, [state, typed, words]);
+  }, [state, typed, words, finishGame]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
