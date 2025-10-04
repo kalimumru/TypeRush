@@ -21,7 +21,7 @@ const Character = React.memo(({ char, state, isCursor }: { char: string; state: 
   return (
     <span
       ref={isCursor ? ref : null}
-      className={cn("font-mono text-2xl md:text-3xl transition-colors duration-150 relative", {
+      className={cn("font-serif text-2xl md:text-3xl transition-colors duration-150 relative", {
         "text-foreground": state === "correct",
         "text-destructive": state === "incorrect",
         "text-muted-foreground": state === "untyped",
@@ -49,7 +49,7 @@ const WordsDisplay = ({ words, typed, totalTyped }: WordsDisplayProps) => {
   }, [words, typed]);
 
   return (
-    <div className="w-full h-full p-4 md:p-6 rounded-lg overflow-hidden leading-relaxed tracking-wider select-none">
+    <div className="w-full h-full p-6 md:p-8 rounded-lg overflow-hidden leading-relaxed tracking-wider select-none">
       <div className="text-left whitespace-pre-wrap">
         {characters.map((item, index) => (
           <Character key={index} char={item.char} state={item.state} isCursor={item.isCursor} />

@@ -9,8 +9,8 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ProgressCircle } from "@/components/ui/progress-circle";
 import { RefreshCw, Timer } from "lucide-react";
+import { Progress } from "../ui/progress";
 
 type ResultsModalProps = {
   isOpen: boolean;
@@ -33,38 +33,32 @@ const ResultsModal = ({
 }: ResultsModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onRestart()}>
-      <DialogContent className="text-foreground shadow-xl">
+      <DialogContent className="text-foreground shadow-lg border-none bg-card">
         <DialogHeader>
-          <DialogTitle className="font-headline text-3xl text-center text-primary">
-            Results
+          <DialogTitle className="font-headline text-3xl text-center">
+            Good Job!
           </DialogTitle>
           <DialogDescription className="text-center">
-            Here is your performance for this round.
+            Here's your performance for this round.
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6">
           <div className="flex flex-col items-center justify-center gap-2">
-            <span className="text-muted-foreground">WPM</span>
+            <span className="text-muted-foreground text-sm">WPM</span>
             <span className="text-6xl font-bold font-headline text-foreground">
               {wpm}
             </span>
           </div>
           <div className="flex flex-col items-center justify-center gap-2">
-             <div className="relative">
-              <ProgressCircle value={accuracy} size={100} strokeWidth={8} />
-              <div className="absolute inset-0 flex items-center justify-center font-headline text-2xl font-bold text-foreground">
-                {accuracy}%
-              </div>
-            </div>
-            <span className="text-muted-foreground">Accuracy</span>
+             <div className="w-full text-center">
+                <p className="font-headline text-4xl font-bold">{accuracy}%</p>
+                <p className="text-sm text-muted-foreground">Accuracy</p>
+                <Progress value={accuracy} className="h-2 mt-2" />
+             </div>
           </div>
-          <div className="col-span-1 md:col-span-2 grid grid-cols-4 divide-x divide-border pt-4">
+          <div className="col-span-1 md:col-span-2 grid grid-cols-3 divide-x divide-border border-t border-border pt-6 mt-4">
               <div className="flex flex-col items-center gap-1">
-                  <span className="font-bold text-xl">{wpm * 5}</span>
-                  <span className="text-xs text-muted-foreground">Characters</span>
-              </div>
-              <div className="flex flex-col items-center gap-1">
-                  <span className="font-bold text-xl text-red-500">{errors}</span>
+                  <span className="font-bold text-xl">{errors}</span>
                   <span className="text-xs text-muted-foreground">Errors</span>
               </div>
               <div className="flex flex-col items-center gap-1">

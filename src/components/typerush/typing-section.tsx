@@ -33,15 +33,16 @@ const TypingSection = ({
 }: TypingSectionProps) => {
   return (
     <div className="flex-1 flex flex-col justify-center items-center gap-8 w-full p-4">
-      <Card className="relative w-full h-40 shadow-lg">
+      <Card className="relative w-full h-48 shadow-sm border-none bg-card">
         {state !== 'running' ? (
            <div className="absolute inset-0 flex flex-col items-center justify-center bg-card/80 backdrop-blur-sm rounded-lg z-10 animate-in fade-in">
-             <h2 className="text-2xl font-headline text-primary">Start Typing Test</h2>
-             <p className="text-muted-foreground mb-4">Click the button to begin.</p>
+             <h2 className="text-3xl font-headline text-foreground">Start Typing Test</h2>
+             <p className="text-muted-foreground mb-6">Select a duration and click start.</p>
              <div className="flex items-center gap-4">
                 <Select
                     value={String(duration)}
                     onValueChange={(value) => onDurationChange(Number(value))}
+                    disabled={state !== 'waiting'}
                 >
                     <SelectTrigger className="w-[180px] bg-background">
                         <Timer className="mr-2 h-4 w-4" />

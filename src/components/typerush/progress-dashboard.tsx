@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Award, BarChart, Calendar, Target, Zap } from "lucide-react";
-import { ProgressCircle } from "@/components/ui/progress-circle";
 import { UserStats } from "@/lib/types";
 import {
   Tooltip,
@@ -11,6 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils";
+import { Progress } from "../ui/progress";
 
 const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
   const xpForNextLevel = 100 * Math.pow(1.5, stats.level);
@@ -24,56 +24,23 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
     { icon: Award, name: "First Steps", unlocked: true, description: "Complete your first game" },
   ];
 
-  const journey = [
-    { level: 1, name: "The Beginning" },
-    { level: 5, name: "Getting the Hang of It" },
-    { level: 10, name: "Keyboard Ninja" },
-    { level: 20, name: "Typing Sensei" },
-    { level: 50, name: "Touch-Typing God" },
-  ];
-
   return (
     <div className="grid grid-cols-1 gap-4 animate-in fade-in-50 duration-500">
-      <Card className="shadow-md">
-        <CardHeader>
-          <CardTitle className="text-lg font-headline text-primary">Level & XP</CardTitle>
+      <Card className="shadow-sm border-none bg-card">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base font-headline">Level {stats.level}</CardTitle>
         </CardHeader>
-        <CardContent className="flex items-center gap-4">
-          <div className="relative">
-            <ProgressCircle value={xpProgress} size={80} strokeWidth={8} />
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-xs text-muted-foreground">LVL</span>
-              <span className="font-headline text-xl font-bold text-foreground">{stats.level}</span>
+        <CardContent>
+            <div className="flex justify-between items-center mb-1">
+                <p className="text-xs text-muted-foreground">{stats.xp.toFixed(0)} / {xpForNextLevel.toFixed(0)} XP</p>
             </div>
-          </div>
-          <div className="flex-1">
-            <p className="text-sm font-semibold">{stats.xp.toFixed(0)} / {xpForNextLevel.toFixed(0)} XP</p>
-            <p className="text-xs text-muted-foreground">To next level</p>
-          </div>
+            <Progress value={xpProgress} className="h-2" />
         </CardContent>
       </Card>
       
-      <Card className="shadow-md">
+      <Card className="shadow-sm border-none bg-card">
         <CardHeader>
-          <CardTitle className="text-lg font-headline text-primary">Typing Journey</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-3">
-            {journey.map((step) => (
-              <li key={step.level} className={`flex items-center gap-3 text-sm ${stats.level >= step.level ? 'text-foreground' : 'text-muted-foreground'}`}>
-                <div className={`w-4 h-4 rounded-full flex items-center justify-center ${stats.level >= step.level ? 'bg-primary' : 'bg-secondary'}`}>
-                  {stats.level >= step.level && <div className="w-2 h-2 rounded-full bg-primary-foreground"></div>}
-                </div>
-                Level {step.level}: {step.name}
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-
-      <Card className="shadow-md">
-        <CardHeader>
-          <CardTitle className="text-lg font-headline text-primary">Badges</CardTitle>
+          <CardTitle className="text-base font-headline">Badges</CardTitle>
         </CardHeader>
         <CardContent>
           <TooltipProvider>
@@ -82,10 +49,10 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
                 <Tooltip key={badge.name}>
                   <TooltipTrigger className="flex flex-col items-center gap-2">
                     <div className={cn(
-                      "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300",
+                      "w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-300",
                       badge.unlocked 
-                        ? 'bg-primary/10 text-primary box-glow-primary' 
-                        : 'bg-secondary text-muted-foreground/50'
+                        ? 'bg-primary/10 text-primary' 
+                        : 'bg-secondary text-muted-foreground/30'
                     )}>
                       <badge.icon className="w-6 h-6" />
                     </div>
