@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils";
-import { Progress } from "../ui/progress";
+import { ProgressCircle } from "../ui/progress-circle";
 
 const getJourneyTitle = (level: number) => {
     if (level >= 50) return "Touch-Typing God";
@@ -38,12 +38,21 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
   return (
     <div className="grid grid-cols-1 gap-4 animate-in fade-in-50 duration-500">
       <Card className="shadow-none border-none bg-background p-4">
-        <CardHeader className="p-0 pb-2 flex-row items-center justify-between text-left">
-          <CardTitle className="text-sm font-semibold">Level {stats.level}</CardTitle>
-           <p className="text-xs text-muted-foreground">{stats.xp.toFixed(0)} / {xpForNextLevel.toFixed(0)} XP</p>
+        <CardHeader className="p-0 pb-4 text-left">
+          <CardTitle className="text-sm font-semibold text-primary">Level & XP</CardTitle>
         </CardHeader>
-        <CardContent className="p-0 text-left">
-            <Progress value={xpProgress} className="h-2" />
+        <CardContent className="p-0 text-left flex items-center gap-4">
+          <div className="relative">
+            <ProgressCircle value={xpProgress} size={80} strokeWidth={8} />
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-xs text-muted-foreground">LVL</span>
+              <span className="text-2xl font-bold font-headline">{stats.level}</span>
+            </div>
+          </div>
+          <div>
+            <p className="text-lg font-semibold">{stats.xp.toFixed(0)} / {xpForNextLevel.toFixed(0)} XP</p>
+            <p className="text-sm text-muted-foreground">To next level</p>
+          </div>
         </CardContent>
       </Card>
       
