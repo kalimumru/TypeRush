@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Award, BarChart, Calendar, Target, Zap } from "lucide-react";
+import { Award, BarChart, Calendar, Target, Zap, Rocket } from "lucide-react";
 import { UserStats } from "@/lib/types";
 import {
   Tooltip,
@@ -12,9 +12,18 @@ import {
 import { cn } from "@/lib/utils";
 import { Progress } from "../ui/progress";
 
+const getJourneyTitle = (level: number) => {
+    if (level >= 50) return "Touch-Typing God";
+    if (level >= 20) return "Typing Sensei";
+    if (level >= 10) return "Keyboard Ninja";
+    if (level >= 5) return "Getting the Hang of It";
+    return "The Beginning";
+}
+
 const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
   const xpForNextLevel = 100 * Math.pow(1.5, stats.level);
   const xpProgress = (stats.xp / xpForNextLevel) * 100;
+  const journeyTitle = getJourneyTitle(stats.level);
 
   const badges = [
     { icon: Zap, name: "Speed Demon", unlocked: stats.wpm > 80, description: "Reach over 80 WPM" },
@@ -47,7 +56,7 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
                 <Tooltip key={badge.name}>
                   <TooltipTrigger className="flex flex-col items-center gap-2">
                     <div className={cn(
-                      "w-12 h-12 rounded-lg flex items-center justify-center transition-all duration-300",
+                      "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300",
                       badge.unlocked 
                         ? 'bg-primary/10 text-primary' 
                         : 'bg-secondary text-muted-foreground/30'
@@ -64,6 +73,15 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
             </div>
           </TooltipProvider>
         </CardContent>
+      </Card>
+      <Card className="shadow-none border-none bg-background p-4">
+          <CardHeader className="p-0 pb-2 text-left">
+              <CardTitle className="text-sm font-semibold">Typing Journey</CardTitle>
+          </CardHeader>
+          <CardContent className="p-0 text-left flex items-center gap-3">
+              <Rocket className="w-5 h-5 text-primary" />
+              <p className="text-sm text-muted-foreground font-medium">{journeyTitle}</p>
+          </CardContent>
       </Card>
     </div>
   );
