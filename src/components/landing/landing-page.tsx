@@ -4,7 +4,7 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { BarChart2, Gamepad2, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Card } from "../ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 
 const LandingPage = () => {
     const studentImage = PlaceHolderImages.find(p => p.id === 'student-typing');
@@ -60,6 +60,52 @@ const LandingPage = () => {
                 </div>
             </div>
         </section>
+        
+        <section className="py-12 md:py-24 bg-background">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6">
+                <div className="text-center mb-12">
+                    <h2 className="font-headline text-3xl md:text-4xl font-bold text-foreground">Why You'll Love TypeRush</h2>
+                    <p className="text-muted-foreground mt-2">Everything you need to become a typing pro.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <Card className="text-center border-none shadow-sm bg-card">
+                        <CardHeader>
+                            <div className="mx-auto bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                                <Gamepad2 className="w-8 h-8" />
+                            </div>
+                            <CardTitle className="font-headline">Gamified Practice</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground">Level up and earn badges as you improve. Our game-like environment makes practicing fun and addictive.</p>
+                        </CardContent>
+                    </Card>
+                    <Card className="text-center border-none shadow-sm bg-card">
+                        <CardHeader>
+                            <div className="mx-auto bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                                <BarChart2 className="w-8 h-8" />
+                            </div>
+                            <CardTitle className="font-headline">Track Your Progress</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground">Detailed stats show your WPM, accuracy, and most problematic keys, helping you focus your practice.</p>
+                        </CardContent>
+                    </Card>
+                    <Card className="text-center border-none shadow-sm bg-card">
+                        <CardHeader>
+                            <div className="mx-auto bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mb-4">
+                                <Zap className="w-8 h-8" />
+                            </div>
+                            <CardTitle className="font-headline">Dynamic Challenges</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-muted-foreground">Paragraphs adjust to your chosen test duration, ensuring you always have a fair and engaging challenge.</p>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        </section>
+
       </main>
 
        <footer className="w-full py-8 bg-secondary text-center text-muted-foreground text-sm">
