@@ -39,7 +39,7 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
     <div className="grid grid-cols-1 gap-4 animate-in fade-in-50 duration-500">
       <Card className="shadow-none border-none bg-background p-4">
         <CardHeader className="p-0 pb-4 text-left">
-          <CardTitle className="text-sm font-semibold text-primary">Level & XP</CardTitle>
+          <CardTitle className="text-lg font-bold text-foreground">Level & XP</CardTitle>
         </CardHeader>
         <CardContent className="p-0 text-left flex items-center gap-4">
           <div className="relative">
