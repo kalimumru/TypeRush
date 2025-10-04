@@ -98,48 +98,60 @@ const useEngine = (options?: EngineOptions) => {
   }, []);
 
   const finishGame = useCallback(() => {
-    if (state === 'finished' || !startTime) return;
+    setState(currentState => {
+      if (currentState !== 'running' || !startTime) return currentState;
 
-    setState('finished');
-    const timeElapsedInSeconds = (Date.now() - startTime) / 1000;
-    setTimeTaken(timeElapsedInSeconds);
+      const timeElapsedInSeconds = (Date.now() - startTime) / 1000;
+      setTimeTaken(timeElapsedInSeconds);
 
-    const finalWpm = Math.round(((totalTyped / 5) / timeElapsedInSeconds) * 60);
-    const finalAccuracy = accuracy;
-
-    const newXp = (finalWpm * 0.5) + (finalAccuracy * 0.2);
-    setXpGained(newXp);
-
-    setStats(prevStats => {
-      const xpForNextLevel = 100 * Math.pow(1.5, prevStats.level);
-      let newLevel = prevStats.level;
-      let currentXp = prevStats.xp + newXp;
+      setTyped(currentTyped => {
+        setErrors(currentErrors => {
+          const finalTotalTyped = currentTyped.length;
+          const finalCorrectChars = finalTotalTyped - currentErrors.size;
+          const finalAccuracy = finalTotalTyped === 0 ? 100 : Math.round((finalCorrectChars / finalTotalTyped) * 100);
+          const finalWpm = Math.round(((finalTotalTyped / 5) / timeElapsedInSeconds) * 60);
+          
+          const newXp = (finalWpm * 0.5) + (finalAccuracy * 0.2);
+          setXpGained(newXp);
       
-      if (currentXp >= xpForNextLevel) {
-        newLevel += 1;
-        currentXp -= xpForNextLevel;
-        setLevelUp(true);
-      }
+          setStats(prevStats => {
+            const xpForNextLevel = 100 * Math.pow(1.5, prevStats.level);
+            let newLevel = prevStats.level;
+            let currentXp = prevStats.xp + newXp;
+            
+            if (currentXp >= xpForNextLevel) {
+              newLevel += 1;
+              currentXp -= xpForNextLevel;
+              setLevelUp(true);
+            }
+      
+            const updatedStats: UserStats = {
+              ...prevStats,
+              wpm: Math.max(prevStats.wpm, finalWpm),
+              accuracy: Math.max(prevStats.accuracy, finalAccuracy),
+              streaks: prevStats.streaks + 1, // Simplified
+              level: newLevel,
+              xp: currentXp,
+            };
+      
+            return updatedStats;
+          });
 
-      const updatedStats: UserStats = {
-        ...prevStats,
-        wpm: Math.max(prevStats.wpm, finalWpm),
-        accuracy: Math.max(prevStats.accuracy, finalAccuracy),
-        streaks: prevStats.streaks + 1, // Simplified
-        level: newLevel,
-        xp: currentXp,
-      };
+          return currentErrors;
+        });
+        return currentTyped;
+      });
 
-      return updatedStats;
+      return 'finished';
     });
-  }, [state, startTime, totalTyped, accuracy]);
+  }, [startTime]);
 
 
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
-    if (state === 'running' && startTime) {
+    if (state === 'running') {
       timer = setInterval(() => {
-        const timeElapsed = (Date.now() - startTime) / 1000;
+        const timeElapsed = (Date.now() - startTime!) / 1000;
         const newTimeLeft = Math.max(0, gameTime - Math.floor(timeElapsed));
         setTimeLeft(newTimeLeft);
 
