@@ -44,7 +44,6 @@ const useEngine = (options?: EngineOptions) => {
   const [isNewKeyCorrect, setIsNewKeyCorrect] = useState<boolean | null>(null);
   const [levelUp, setLevelUp] = useState(false);
   const [timeTaken, setTimeTaken] = useState(0);
-  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -89,7 +88,6 @@ const useEngine = (options?: EngineOptions) => {
     setStartTime(Date.now());
     setTimeLeft(gameTime);
     setLevelUp(false);
-    setCompleted(false);
   }, [prepareWords, gameTime]);
 
   const restart = useCallback(() => {
@@ -97,16 +95,14 @@ const useEngine = (options?: EngineOptions) => {
     setXpGained(0);
     setLevelUp(false);
     setTimeTaken(0);
-    setCompleted(false);
   }, []);
 
-  const finishGame = useCallback((completedEarly = false) => {
+  const finishGame = useCallback(() => {
     setState(currentState => {
       if (currentState !== 'running' || !startTime) return currentState;
 
       const timeElapsedInSeconds = (Date.now() - startTime) / 1000;
       setTimeTaken(timeElapsedInSeconds);
-      setCompleted(completedEarly);
 
       setTyped(currentTyped => {
         setErrors(currentErrors => {
@@ -119,35 +115,31 @@ const useEngine = (options?: EngineOptions) => {
           const finalAccuracy = Math.round((finalCorrectChars / finalTotalTyped) * 100);
           const finalWpm = Math.round(((finalTotalTyped / 5) / timeElapsedInSeconds) * 60);
           
-          if(completedEarly) {
-            const newXp = (finalWpm * 0.5) + (finalAccuracy * 0.2);
-            setXpGained(newXp);
-        
-            setStats(prevStats => {
-              const xpForNextLevel = 100 * Math.pow(1.5, prevStats.level);
-              let newLevel = prevStats.level;
-              let currentXp = prevStats.xp + newXp;
-              
-              if (currentXp >= xpForNextLevel) {
-                newLevel += 1;
-                currentXp -= xpForNextLevel;
-                setLevelUp(true);
-              }
-        
-              const updatedStats: UserStats = {
-                ...prevStats,
-                wpm: Math.max(prevStats.wpm, finalWpm),
-                accuracy: Math.max(prevStats.accuracy, finalAccuracy),
-                streaks: prevStats.streaks + 1, // Simplified
-                level: newLevel,
-                xp: currentXp,
-              };
-        
-              return updatedStats;
-            });
-          } else {
-            setXpGained(0);
-          }
+          const newXp = (finalWpm * 0.5) + (finalAccuracy * 0.2);
+          setXpGained(newXp);
+      
+          setStats(prevStats => {
+            const xpForNextLevel = 100 * Math.pow(1.5, prevStats.level);
+            let newLevel = prevStats.level;
+            let currentXp = prevStats.xp + newXp;
+            
+            if (currentXp >= xpForNextLevel) {
+              newLevel += 1;
+              currentXp -= xpForNextLevel;
+              setLevelUp(true);
+            }
+      
+            const updatedStats: UserStats = {
+              ...prevStats,
+              wpm: Math.max(prevStats.wpm, finalWpm),
+              accuracy: Math.max(prevStats.accuracy, finalAccuracy),
+              streaks: prevStats.streaks + 1, // Simplified
+              level: newLevel,
+              xp: currentXp,
+            };
+      
+            return updatedStats;
+          });
 
           return currentErrors;
         });
@@ -168,7 +160,7 @@ const useEngine = (options?: EngineOptions) => {
         setTimeLeft(newTimeLeft);
 
         if (newTimeLeft <= 0) {
-            finishGame(false);
+            finishGame();
         }
       }, 1000);
     }
@@ -207,7 +199,7 @@ const useEngine = (options?: EngineOptions) => {
       setTyped(newTyped);
 
       if (newTyped.length === words.length) {
-        finishGame(true);
+        finishGame();
       }
     }
   }, [state, typed, words, finishGame]);
@@ -235,11 +227,10 @@ const useEngine = (options?: EngineOptions) => {
       isNewKeyCorrect: null,
       levelUp: false,
       timeTaken: 0,
-      completed: false,
     };
   }
 
-  return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained, isNewKeyCorrect, levelUp, timeTaken, completed };
+  return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained, isNewKeyCorrect, levelUp, timeTaken };
 };
 
 export default useEngine;
