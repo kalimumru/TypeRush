@@ -147,16 +147,6 @@ const useEngine = (options?: EngineOptions) => {
     };
   }, [state, startTime, gameTime, finishGame]);
   
-  useEffect(() => {
-    if (state === 'finished') {
-      const timer = setTimeout(() => {
-        restart();
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [state, restart]);
-
-
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (state !== 'running' || typed.length >= words.length) return;
 
