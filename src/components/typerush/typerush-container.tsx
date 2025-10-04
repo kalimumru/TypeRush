@@ -28,9 +28,17 @@ const TyperushContainer = () => {
     xpGained,
     levelUp,
     timeTaken,
+    completed,
   } = useEngine({ duration });
   
   const { toast } = useToast();
+
+  const handleNextLevel = () => {
+    restart();
+    setTimeout(() => {
+        startGame();
+    }, 100);
+  };
 
   useEffect(() => {
     if (levelUp) {
@@ -73,12 +81,14 @@ const TyperushContainer = () => {
         <ResultsModal
           isOpen={state === 'finished'}
           onRestart={restart}
+          onNextLevel={handleNextLevel}
           wpm={wpm}
           accuracy={accuracy}
           errors={errors.size}
           xpGained={xpGained}
           timeTaken={timeTaken}
           totalTyped={totalTyped}
+          completed={completed}
         />
       )}
     </div>

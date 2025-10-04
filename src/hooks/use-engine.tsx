@@ -44,6 +44,7 @@ const useEngine = (options?: EngineOptions) => {
   const [isNewKeyCorrect, setIsNewKeyCorrect] = useState<boolean | null>(null);
   const [levelUp, setLevelUp] = useState(false);
   const [timeTaken, setTimeTaken] = useState(0);
+  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -88,6 +89,7 @@ const useEngine = (options?: EngineOptions) => {
     setStartTime(Date.now());
     setTimeLeft(gameTime);
     setLevelUp(false);
+    setCompleted(false);
   }, [prepareWords, gameTime]);
 
   const restart = useCallback(() => {
@@ -95,14 +97,16 @@ const useEngine = (options?: EngineOptions) => {
     setXpGained(0);
     setLevelUp(false);
     setTimeTaken(0);
+    setCompleted(false);
   }, []);
 
-  const finishGame = useCallback(() => {
+  const finishGame = useCallback((completedEarly = false) => {
     setState(currentState => {
       if (currentState !== 'running' || !startTime) return currentState;
 
       const timeElapsedInSeconds = (Date.now() - startTime) / 1000;
       setTimeTaken(timeElapsedInSeconds);
+      setCompleted(completedEarly);
 
       setTyped(currentTyped => {
         setErrors(currentErrors => {
@@ -158,7 +162,7 @@ const useEngine = (options?: EngineOptions) => {
         setTimeLeft(newTimeLeft);
 
         if (newTimeLeft <= 0) {
-            finishGame();
+            finishGame(false);
         }
       }, 1000);
     }
@@ -197,7 +201,7 @@ const useEngine = (options?: EngineOptions) => {
       setTyped(newTyped);
 
       if (newTyped.length === words.length) {
-        finishGame();
+        finishGame(true);
       }
     }
   }, [state, typed, words, finishGame]);
@@ -225,10 +229,11 @@ const useEngine = (options?: EngineOptions) => {
       isNewKeyCorrect: null,
       levelUp: false,
       timeTaken: 0,
+      completed: false,
     };
   }
 
-  return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained, isNewKeyCorrect, levelUp, timeTaken };
+  return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained, isNewKeyCorrect, levelUp, timeTaken, completed };
 };
 
 export default useEngine;

@@ -9,29 +9,33 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, Timer, Type } from "lucide-react";
+import { RefreshCw, Timer, Type, ArrowRight } from "lucide-react";
 import { Progress } from "../ui/progress";
 
 type ResultsModalProps = {
   isOpen: boolean;
   onRestart: () => void;
+  onNextLevel: () => void;
   wpm: number;
   accuracy: number;
   errors: number;
   xpGained: number;
   timeTaken: number;
   totalTyped: number;
+  completed: boolean;
 };
 
 const ResultsModal = ({
   isOpen,
   onRestart,
+  onNextLevel,
   wpm,
   accuracy,
   errors,
   xpGained,
   timeTaken,
   totalTyped,
+  completed,
 }: ResultsModalProps) => {
 
   const title = totalTyped > 0 ? "Good Job!" : "Your Results";
@@ -90,11 +94,16 @@ const ResultsModal = ({
               </div>
           </div>
         </div>
-        <DialogFooter>
-          <Button onClick={onRestart} className="w-full">
+        <DialogFooter className="gap-2 sm:gap-0">
+          <Button onClick={onRestart} variant="outline">
             <RefreshCw className="mr-2 h-4 w-4" />
             Try Again
           </Button>
+          {completed && (
+            <Button onClick={onNextLevel} className="w-full">
+              Next Level <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
