@@ -26,8 +26,8 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
 
   return (
     <div className="grid grid-cols-1 gap-4 animate-in fade-in-50 duration-500">
-      <Card className="shadow-sm border-none bg-card p-6">
-        <CardHeader className="p-0 pb-2 flex-row items-center justify-between">
+      <Card className="shadow-none border-none bg-background p-4">
+        <CardHeader className="p-0 pb-2 flex-row items-center justify-between text-left">
           <CardTitle className="text-sm font-semibold">Level {stats.level}</CardTitle>
            <p className="text-xs text-muted-foreground">{stats.xp.toFixed(0)} / {xpForNextLevel.toFixed(0)} XP</p>
         </CardHeader>
@@ -36,8 +36,8 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
         </CardContent>
       </Card>
       
-      <Card className="shadow-sm border-none bg-card p-6">
-        <CardHeader className="p-0 pb-4">
+      <Card className="shadow-none border-none bg-background p-4">
+        <CardHeader className="p-0 pb-4 text-left">
           <CardTitle className="text-sm font-semibold">Badges</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
