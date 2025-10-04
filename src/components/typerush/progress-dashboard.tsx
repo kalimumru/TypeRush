@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -17,6 +18,7 @@ const getJourneyTitle = (level: number) => {
     if (level >= 20) return "Typing Sensei";
     if (level >= 10) return "Keyboard Ninja";
     if (level >= 5) return "Getting the Hang of It";
+    if (level >= 3) return "Keyboard Padawan";
     return "The Beginning";
 }
 
