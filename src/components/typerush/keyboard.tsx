@@ -51,7 +51,7 @@ const Keyboard = ({ lastPressedKey, keyStats }: KeyboardProps) => {
   }, [lastPressedKey]);
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-2 md:p-4 rounded-lg bg-card shadow-sm border-none" >
+    <div className="w-full max-w-4xl mx-auto p-2 md:p-4 rounded-lg bg-card shadow-md border-none" >
       <div className="space-y-1 md:space-y-2">
         {keyLayout.map((row, rowIndex) => (
           <div key={rowIndex} className="flex justify-center gap-1 md:gap-2">

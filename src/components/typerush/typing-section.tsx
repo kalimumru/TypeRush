@@ -33,7 +33,7 @@ const TypingSection = ({
 }: TypingSectionProps) => {
   return (
     <div className="flex-1 flex flex-col justify-center items-center gap-8 w-full">
-      <Card className="relative w-full h-48 shadow-sm border-none bg-card p-6">
+      <Card className="relative w-full h-48 shadow-md border-none bg-card p-6">
         {state !== 'running' ? (
            <div className="absolute inset-0 flex flex-col items-center justify-center bg-card/80 backdrop-blur-sm rounded-lg z-10 animate-in fade-in">
              <h2 className="text-xl font-semibold text-foreground mb-2">Start Typing Test</h2>

@@ -69,7 +69,7 @@ const LandingPage = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <Card className="text-center border-none shadow-sm bg-card">
+                    <Card className="text-center border-none shadow-md bg-card">
                         <CardHeader>
                             <div className="mx-auto bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mb-4">
                                 <Gamepad2 className="w-8 h-8" />
@@ -80,7 +80,7 @@ const LandingPage = () => {
                             <p className="text-muted-foreground">Level up and earn badges as you improve. Our game-like environment makes practicing fun and addictive.</p>
                         </CardContent>
                     </Card>
-                    <Card className="text-center border-none shadow-sm bg-card">
+                    <Card className="text-center border-none shadow-md bg-card">
                         <CardHeader>
                             <div className="mx-auto bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mb-4">
                                 <BarChart2 className="w-8 h-8" />
@@ -91,7 +91,7 @@ const LandingPage = () => {
                             <p className="text-muted-foreground">Detailed stats show your WPM, accuracy, and most problematic keys, helping you focus your practice.</p>
                         </CardContent>
                     </Card>
-                    <Card className="text-center border-none shadow-sm bg-card">
+                    <Card className="text-center border-none shadow-md bg-card">
                         <CardHeader>
                             <div className="mx-auto bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center mb-4">
                                 <Zap className="w-8 h-8" />

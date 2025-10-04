@@ -19,7 +19,7 @@ const GameStats = ({ state, wpm, accuracy, timeLeft, stats }: GameStatsProps) =>
         {state === 'running' ? (
             <LiveStats wpm={wpm} accuracy={accuracy} timeLeft={timeLeft} />
         ) : (
-            <Card className="shadow-sm border-none bg-card text-left p-4">
+            <Card className="shadow-md border-none bg-card text-left p-4">
                 <CardContent className="p-0">
                     <ProgressDashboard stats={stats} />
                 </CardContent>
