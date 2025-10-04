@@ -6,7 +6,12 @@ import { generateWords } from '@/lib/word-generator';
 import type { GameState, UserStats } from '@/lib/types';
 import { loadUserData, saveUserData } from '@/lib/user-data';
 
-const WORDS_COUNT = 50;
+const getWordsCount = (duration: number): number => {
+  if (duration <= 15) return 15;
+  if (duration <= 30) return 30;
+  if (duration <= 60) return 50;
+  return 80;
+};
 
 const defaultStats: UserStats = {
   level: 1,
@@ -69,12 +74,13 @@ const useEngine = (options?: EngineOptions) => {
   }, [totalTyped, errors]);
 
   const prepareWords = useCallback(() => {
-    const newWords = generateWords(WORDS_COUNT);
+    const wordsCount = getWordsCount(gameTime);
+    const newWords = generateWords(wordsCount);
     setWords(newWords);
     setTyped('');
     setErrors(new Set());
     setLastPressedKey(null);
-  }, []);
+  }, [gameTime]);
 
   const startGame = useCallback(() => {
     prepareWords();
