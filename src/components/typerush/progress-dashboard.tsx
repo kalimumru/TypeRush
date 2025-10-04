@@ -39,7 +39,7 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
     <div className="grid grid-cols-1 gap-4 animate-in fade-in-50 duration-500">
       <Card className="shadow-md border-none bg-background p-4">
         <CardHeader className="p-0 pb-4 text-left">
-          <CardTitle className="text-base font-semibold text-foreground">Level & XP</CardTitle>
+          <CardTitle className="font-headline text-lg font-bold text-foreground">Level & XP</CardTitle>
         </CardHeader>
         <CardContent className="p-0 text-left flex items-center gap-4">
           <div className="relative">
@@ -58,7 +58,7 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
       
       <Card className="shadow-md border-none bg-background p-4">
         <CardHeader className="p-0 pb-4 text-left">
-          <CardTitle className="text-base font-semibold text-foreground">Badges</CardTitle>
+          <CardTitle className="font-headline text-lg font-bold text-foreground">Badges</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <TooltipProvider>
@@ -87,7 +87,7 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
       </Card>
       <Card className="shadow-md border-none bg-background p-4">
           <CardHeader className="p-0 pb-2 text-left">
-              <CardTitle className="text-base font-semibold text-foreground">Typing Journey</CardTitle>
+              <CardTitle className="font-headline text-lg font-bold text-foreground">Typing Journey</CardTitle>
           </CardHeader>
           <CardContent className="p-0 text-left flex items-center gap-3">
               <Rocket className="w-5 h-5 text-primary" />
