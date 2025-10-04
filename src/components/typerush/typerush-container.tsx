@@ -27,6 +27,7 @@ const TyperushContainer = () => {
     startGame,
     xpGained,
     levelUp,
+    timeTaken,
   } = useEngine({ duration });
   
   const { toast } = useToast();
@@ -82,6 +83,7 @@ const TyperushContainer = () => {
           accuracy={accuracy}
           errors={errors.size}
           xpGained={xpGained}
+          timeTaken={timeTaken}
         />
       )}
     </div>

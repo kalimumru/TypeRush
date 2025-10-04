@@ -37,6 +37,7 @@ const useEngine = (options?: EngineOptions) => {
   const [xpGained, setXpGained] = useState(0);
   const [isNewKeyCorrect, setIsNewKeyCorrect] = useState<boolean | null>(null);
   const [levelUp, setLevelUp] = useState(false);
+  const [timeTaken, setTimeTaken] = useState(0);
 
   useEffect(() => {
     setIsMounted(true);
@@ -86,6 +87,7 @@ const useEngine = (options?: EngineOptions) => {
     setState('waiting');
     setXpGained(0);
     setLevelUp(false);
+    setTimeTaken(0);
   }, []);
 
   const finishGame = useCallback(() => {
@@ -93,6 +95,8 @@ const useEngine = (options?: EngineOptions) => {
 
     setState('finished');
     const timeElapsedInSeconds = (Date.now() - startTime) / 1000;
+    setTimeTaken(timeElapsedInSeconds);
+
     const finalWpm = Math.round(((totalTyped / 5) / timeElapsedInSeconds) * 60);
     const finalAccuracy = accuracy;
 
@@ -200,10 +204,11 @@ const useEngine = (options?: EngineOptions) => {
       xpGained: 0,
       isNewKeyCorrect: null,
       levelUp: false,
+      timeTaken: 0,
     };
   }
 
-  return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained, isNewKeyCorrect, levelUp };
+  return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained, isNewKeyCorrect, levelUp, timeTaken };
 };
 
 export default useEngine;

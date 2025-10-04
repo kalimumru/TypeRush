@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ProgressCircle } from "@/components/ui/progress-circle";
-import { RefreshCw } from "lucide-react";
+import { RefreshCw, Timer } from "lucide-react";
 
 type ResultsModalProps = {
   isOpen: boolean;
@@ -19,6 +19,7 @@ type ResultsModalProps = {
   accuracy: number;
   errors: number;
   xpGained: number;
+  timeTaken: number;
 };
 
 const ResultsModal = ({
@@ -27,7 +28,8 @@ const ResultsModal = ({
   wpm,
   accuracy,
   errors,
-  xpGained
+  xpGained,
+  timeTaken,
 }: ResultsModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onRestart()}>
@@ -56,7 +58,7 @@ const ResultsModal = ({
             </div>
             <span className="text-muted-foreground">Accuracy</span>
           </div>
-          <div className="col-span-1 md:col-span-2 grid grid-cols-3 divide-x divide-border pt-4">
+          <div className="col-span-1 md:col-span-2 grid grid-cols-4 divide-x divide-border pt-4">
               <div className="flex flex-col items-center gap-1">
                   <span className="font-bold text-xl">{wpm * 5}</span>
                   <span className="text-xs text-muted-foreground">Characters</span>
@@ -68,6 +70,13 @@ const ResultsModal = ({
               <div className="flex flex-col items-center gap-1">
                   <span className="font-bold text-xl text-green-500">+{xpGained.toFixed(0)}</span>
                   <span className="text-xs text-muted-foreground">XP Gained</span>
+              </div>
+               <div className="flex flex-col items-center gap-1">
+                  <span className="font-bold text-xl flex items-center gap-1.5">
+                    <Timer className="w-4 h-4" />
+                    {timeTaken.toFixed(1)}s
+                  </span>
+                  <span className="text-xs text-muted-foreground">Time Taken</span>
               </div>
           </div>
         </div>
