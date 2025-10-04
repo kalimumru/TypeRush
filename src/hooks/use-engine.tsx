@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
@@ -145,6 +146,15 @@ const useEngine = (options?: EngineOptions) => {
       if (timer) clearInterval(timer);
     };
   }, [state, startTime, gameTime, finishGame]);
+  
+  useEffect(() => {
+    if (state === 'finished') {
+      const timer = setTimeout(() => {
+        restart();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [state, restart]);
 
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
