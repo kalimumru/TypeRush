@@ -78,6 +78,7 @@ const TyperushContainer = () => {
           errors={errors.size}
           xpGained={xpGained}
           timeTaken={timeTaken}
+          totalTyped={totalTyped}
         />
       )}
     </div>

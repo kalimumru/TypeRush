@@ -68,7 +68,7 @@ const useEngine = (options?: EngineOptions) => {
   }, [totalTyped, startTime]);
 
   const accuracy = useMemo(() => {
-    if (totalTyped === 0) return 100;
+    if (totalTyped === 0) return 0;
     const correctChars = totalTyped - errors.size;
     return Math.round((correctChars / totalTyped) * 100);
   }, [totalTyped, errors]);
@@ -108,13 +108,15 @@ const useEngine = (options?: EngineOptions) => {
         setErrors(currentErrors => {
           const finalTotalTyped = currentTyped.length;
           const finalCorrectChars = finalTotalTyped - currentErrors.size;
-          const finalAccuracy = finalTotalTyped === 0 ? 100 : Math.round((finalCorrectChars / finalTotalTyped) * 100);
+          const finalAccuracy = finalTotalTyped === 0 ? 0 : Math.round((finalCorrectChars / finalTotalTyped) * 100);
           const finalWpm = Math.round(((finalTotalTyped / 5) / timeElapsedInSeconds) * 60);
           
           const newXp = (finalWpm * 0.5) + (finalAccuracy * 0.2);
           setXpGained(newXp);
       
           setStats(prevStats => {
+            if (finalTotalTyped === 0) return prevStats; // Don't update stats if nothing was typed
+            
             const xpForNextLevel = 100 * Math.pow(1.5, prevStats.level);
             let newLevel = prevStats.level;
             let currentXp = prevStats.xp + newXp;
@@ -212,7 +214,7 @@ const useEngine = (options?: EngineOptions) => {
       typed: '', 
       errors: new Set(), 
       wpm: 0, 
-      accuracy: 100, 
+      accuracy: 0, 
       timeLeft: gameTime, 
       lastPressedKey: null, 
       stats: defaultStats, 

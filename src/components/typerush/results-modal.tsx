@@ -20,6 +20,7 @@ type ResultsModalProps = {
   errors: number;
   xpGained: number;
   timeTaken: number;
+  totalTyped: number;
 };
 
 const ResultsModal = ({
@@ -30,16 +31,24 @@ const ResultsModal = ({
   errors,
   xpGained,
   timeTaken,
+  totalTyped,
 }: ResultsModalProps) => {
+
+  const title = totalTyped > 0 ? "Good Job!" : "Your Results";
+  const description = totalTyped > 0 
+    ? "Here's your performance for this round."
+    : "Start typing to see your stats.";
+
+
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onRestart()}>
       <DialogContent className="text-foreground shadow-lg border-none bg-card">
         <DialogHeader>
           <DialogTitle className="font-headline text-3xl text-center">
-            Good Job!
+            {title}
           </DialogTitle>
           <DialogDescription className="text-center">
-            Here's your performance for this round.
+            {description}
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6">
