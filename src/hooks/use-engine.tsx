@@ -51,12 +51,14 @@ const useEngine = (options?: EngineOptions) => {
   }, [stats, isMounted]);
 
   const totalTyped = useMemo(() => typed.length, [typed]);
+  
   const wpm = useMemo(() => {
     if (!startTime || totalTyped === 0) return 0;
     const timeElapsed = (Date.now() - startTime) / 1000 / 60; // in minutes
+    if (timeElapsed === 0) return 0;
     const grossWpm = (totalTyped / 5) / timeElapsed;
     return Math.round(Math.max(0, grossWpm));
-  }, [totalTyped, startTime]);
+  }, [totalTyped, startTime, state]);
 
   const accuracy = useMemo(() => {
     if (totalTyped === 0) return 100;
@@ -88,7 +90,7 @@ const useEngine = (options?: EngineOptions) => {
 
   const finishGame = useCallback(() => {
     setState('finished');
-    const timeElapsed = (Date.now() - (startTime ?? Date.now())) / 1000;
+    const timeElapsed = gameTime;
     const finalWpm = Math.round(((totalTyped / 5) / timeElapsed) * 60);
     const finalAccuracy = accuracy;
 
@@ -117,24 +119,27 @@ const useEngine = (options?: EngineOptions) => {
 
       return updatedStats;
     });
-  }, [startTime, totalTyped, accuracy]);
+  }, [totalTyped, accuracy, gameTime]);
 
 
   useEffect(() => {
-    if (state === 'running') {
-      const timer = setInterval(() => {
-        const timeElapsed = (Date.now() - (startTime ?? Date.now())) / 1000;
+    let timer: NodeJS.Timeout | null = null;
+    if (state === 'running' && startTime) {
+      timer = setInterval(() => {
+        const timeElapsed = (Date.now() - startTime) / 1000;
         const newTimeLeft = Math.max(0, gameTime - Math.floor(timeElapsed));
         setTimeLeft(newTimeLeft);
 
-        if (newTimeLeft === 0) {
-          clearInterval(timer);
+        if (newTimeLeft <= 0) {
           finishGame();
         }
       }, 1000);
-      return () => clearInterval(timer);
     }
-  }, [state, startTime, finishGame, gameTime]);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [state, startTime, gameTime, finishGame]);
+
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (state !== 'running' || typed.length >= words.length) return;
@@ -155,15 +160,15 @@ const useEngine = (options?: EngineOptions) => {
     }
 
     if (key.length === 1) {
-      if (words[totalTyped] !== key) {
-        setErrors(prev => new Set(prev).add(totalTyped));
+      if (words[typed.length] !== key) {
+        setErrors(prev => new Set(prev).add(typed.length));
         setIsNewKeyCorrect(false);
       } else {
         setIsNewKeyCorrect(true);
       }
       setTyped(prev => prev + key);
     }
-  }, [state, typed, words, totalTyped]);
+  }, [state, typed, words]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
