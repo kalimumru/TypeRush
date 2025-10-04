@@ -5,7 +5,7 @@ export default function PlayPage() {
     <div 
       className="relative min-h-screen w-full overflow-hidden"
       style={{
-        backgroundImage: 'linear-gradient(to right, #ffbf00, #f2cf7e, #ffe642, #ff7900)'
+        backgroundImage: 'linear-gradient(to right top, #0c0a1d, #1d153c, #311d5d, #492281, #6625a7)'
       }}
     >
       <div className="relative z-10 flex flex-col min-h-dvh">
