@@ -61,7 +61,7 @@ const LandingPage = () => {
             </div>
         </section>
         
-        <section className="py-12 md:py-24 bg-background">
+        <section className="py-12 md:py-24 bg-primary/10">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="text-center mb-12">
                     <h2 className="font-headline text-3xl md:text-4xl font-bold text-foreground">Why You'll Love TypeRush</h2>
