@@ -9,7 +9,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, Timer } from "lucide-react";
+import { RefreshCw, Timer, Type } from "lucide-react";
 import { Progress } from "../ui/progress";
 
 type ResultsModalProps = {
@@ -65,7 +65,14 @@ const ResultsModal = ({
                 <Progress value={accuracy} className="h-2 mt-2" />
              </div>
           </div>
-          <div className="col-span-1 md:col-span-2 grid grid-cols-3 divide-x divide-border border-t border-border pt-6 mt-4">
+          <div className="col-span-1 md:col-span-2 grid grid-cols-4 divide-x divide-border border-t border-border pt-6 mt-4">
+              <div className="flex flex-col items-center gap-1">
+                  <span className="font-bold text-xl flex items-center gap-1.5">
+                    <Type className="w-4 h-4" />
+                    {totalTyped}
+                  </span>
+                  <span className="text-xs text-muted-foreground">Characters</span>
+              </div>
               <div className="flex flex-col items-center gap-1">
                   <span className="font-bold text-xl">{errors}</span>
                   <span className="text-xs text-muted-foreground">Errors</span>
