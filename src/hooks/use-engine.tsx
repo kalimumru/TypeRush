@@ -58,7 +58,7 @@ const useEngine = (options?: EngineOptions) => {
     if (timeElapsed === 0) return 0;
     const grossWpm = (totalTyped / 5) / timeElapsed;
     return Math.round(Math.max(0, grossWpm));
-  }, [totalTyped, startTime, state]);
+  }, [totalTyped, startTime]);
 
   const accuracy = useMemo(() => {
     if (totalTyped === 0) return 100;
@@ -131,14 +131,21 @@ const useEngine = (options?: EngineOptions) => {
         setTimeLeft(newTimeLeft);
 
         if (newTimeLeft <= 0) {
-          finishGame();
+            // Directly call finishGame logic here or wrap it to be stable
+            setState('finished');
         }
       }, 1000);
     }
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [state, startTime, gameTime, finishGame]);
+  }, [state, startTime, gameTime]);
+  
+  useEffect(() => {
+    if (state === 'finished') {
+        finishGame();
+    }
+  }, [state, finishGame]);
 
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
