@@ -1,10 +1,10 @@
 
 import { Button } from "@/components/ui/button";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
-import { BarChart2, Gamepad2, Keyboard, Zap } from "lucide-react";
+import { BarChart2, Gamepad2, Zap } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent } from "../ui/card";
+import { Card } from "../ui/card";
 
 const LandingPage = () => {
     const studentImage = PlaceHolderImages.find(p => p.id === 'student-typing');
@@ -26,18 +26,24 @@ const LandingPage = () => {
 
       <main className="flex-1">
         <section className="relative w-full min-h-[60vh] md:min-h-screen flex items-center overflow-hidden">
-            <div className="absolute inset-y-0 right-0 w-full md:w-1/2 bg-primary">
-                <div className="absolute inset-0 bg-primary" style={{clipPath: 'polygon(25% 0, 100% 0, 100% 100%, 0 100%)'}}></div>
-                 {studentImage && (
-                    <Image 
-                        src={studentImage.imageUrl} 
-                        alt={studentImage.description}
-                        fill
-                        className="object-cover"
-                        data-ai-hint={studentImage.imageHint}
-                        priority
-                    />
-                )}
+            <div className="absolute inset-y-0 right-0 w-full md:w-1/2">
+                <div className="relative h-full w-full">
+                    <div className="absolute inset-0 bg-primary" style={{clipPath: 'polygon(25% 0, 100% 0, 100% 100%, 0 100%)'}}></div>
+                    <div className="absolute inset-0 flex items-center justify-center p-8">
+                        {studentImage && (
+                            <div className="relative w-full h-full max-w-lg mx-auto shadow-2xl rounded-lg overflow-hidden">
+                                <Image 
+                                    src={studentImage.imageUrl} 
+                                    alt={studentImage.description}
+                                    fill
+                                    className="object-cover"
+                                    data-ai-hint={studentImage.imageHint}
+                                    priority
+                                />
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
 
             <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 w-full">
