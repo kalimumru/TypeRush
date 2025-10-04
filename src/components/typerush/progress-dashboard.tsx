@@ -26,23 +26,21 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
 
   return (
     <div className="grid grid-cols-1 gap-4 animate-in fade-in-50 duration-500">
-      <Card className="shadow-sm border-none bg-card">
-        <CardHeader className="pb-2">
-          <CardTitle className="text-base font-headline">Level {stats.level}</CardTitle>
+      <Card className="shadow-sm border-none bg-card p-6">
+        <CardHeader className="p-0 pb-2 flex-row items-center justify-between">
+          <CardTitle className="text-sm font-semibold">Level {stats.level}</CardTitle>
+           <p className="text-xs text-muted-foreground">{stats.xp.toFixed(0)} / {xpForNextLevel.toFixed(0)} XP</p>
         </CardHeader>
-        <CardContent>
-            <div className="flex justify-between items-center mb-1">
-                <p className="text-xs text-muted-foreground">{stats.xp.toFixed(0)} / {xpForNextLevel.toFixed(0)} XP</p>
-            </div>
+        <CardContent className="p-0 text-left">
             <Progress value={xpProgress} className="h-2" />
         </CardContent>
       </Card>
       
-      <Card className="shadow-sm border-none bg-card">
-        <CardHeader>
-          <CardTitle className="text-base font-headline">Badges</CardTitle>
+      <Card className="shadow-sm border-none bg-card p-6">
+        <CardHeader className="p-0 pb-4">
+          <CardTitle className="text-sm font-semibold">Badges</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <TooltipProvider>
             <div className="grid grid-cols-5 gap-3 text-center">
               {badges.map((badge) => (

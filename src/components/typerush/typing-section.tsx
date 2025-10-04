@@ -32,12 +32,12 @@ const TypingSection = ({
   onDurationChange,
 }: TypingSectionProps) => {
   return (
-    <div className="flex-1 flex flex-col justify-center items-center gap-8 w-full p-4">
-      <Card className="relative w-full h-48 shadow-sm border-none bg-card">
+    <div className="flex-1 flex flex-col justify-center items-center gap-8 w-full">
+      <Card className="relative w-full h-48 shadow-sm border-none bg-card p-6">
         {state !== 'running' ? (
            <div className="absolute inset-0 flex flex-col items-center justify-center bg-card/80 backdrop-blur-sm rounded-lg z-10 animate-in fade-in">
-             <h2 className="text-3xl font-headline text-foreground">Start Typing Test</h2>
-             <p className="text-muted-foreground mb-6">Select a duration and click start.</p>
+             <h2 className="text-xl font-semibold text-foreground mb-2">Start Typing Test</h2>
+             <p className="text-muted-foreground mb-6 text-sm">Select a duration and click start.</p>
              <div className="flex items-center gap-4">
                 <Select
                     value={String(duration)}
@@ -55,8 +55,8 @@ const TypingSection = ({
                         <SelectItem value="120">120 seconds</SelectItem>
                     </SelectContent>
                 </Select>
-                <Button size="lg" onClick={onStart}>
-                    <Play className="mr-2" /> Start
+                <Button onClick={onStart}>
+                    <Play className="mr-2 h-4 w-4" /> Start
                 </Button>
             </div>
            </div>

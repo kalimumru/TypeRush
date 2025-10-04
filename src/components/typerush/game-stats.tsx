@@ -15,10 +15,9 @@ type GameStatsProps = {
 const GameStats = ({ state, wpm, accuracy, timeLeft, stats }: GameStatsProps) => {
   return (
     <div className="w-full flex flex-col gap-4">
-      {state === 'running' && (
+      {state === 'running' ? (
         <LiveStats wpm={wpm} accuracy={accuracy} timeLeft={timeLeft} />
-      )}
-      {state !== 'running' && (
+      ) : (
         <ProgressDashboard stats={stats} />
       )}
     </div>
