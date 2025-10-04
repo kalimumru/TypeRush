@@ -10,6 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { cn } from "@/lib/utils";
 
 const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
   const xpForNextLevel = 100 * Math.pow(1.5, stats.level);
@@ -76,14 +77,18 @@ const ProgressDashboard = ({ stats }: { stats: UserStats }) => {
         </CardHeader>
         <CardContent>
           <TooltipProvider>
-            <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="grid grid-cols-5 gap-3 text-center">
               {badges.map((badge) => (
                 <Tooltip key={badge.name}>
-                  <TooltipTrigger className="flex flex-col items-center gap-1">
-                    <div className={`w-14 h-14 rounded-lg flex items-center justify-center transition-all ${badge.unlocked ? 'bg-primary/20 text-primary shadow-sm' : 'bg-secondary text-muted-foreground/50'}`}>
-                      <badge.icon className="w-7 h-7" />
+                  <TooltipTrigger className="flex flex-col items-center gap-2">
+                    <div className={cn(
+                      "w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300",
+                      badge.unlocked 
+                        ? 'bg-primary/10 text-primary box-glow-primary' 
+                        : 'bg-secondary text-muted-foreground/50'
+                    )}>
+                      <badge.icon className="w-6 h-6" />
                     </div>
-                    <p className={`text-xs font-medium truncate ${badge.unlocked ? 'text-foreground' : 'text-muted-foreground/60'}`}>{badge.name}</p>
                   </TooltipTrigger>
                   <TooltipContent>
                     <p className="font-semibold">{badge.name}</p>
