@@ -111,37 +111,43 @@ const useEngine = (options?: EngineOptions) => {
       setTyped(currentTyped => {
         setErrors(currentErrors => {
           const finalTotalTyped = currentTyped.length;
+          if (finalTotalTyped === 0) {
+            setState('finished');
+            return currentErrors;
+          }
           const finalCorrectChars = finalTotalTyped - currentErrors.size;
-          const finalAccuracy = finalTotalTyped === 0 ? 0 : Math.round((finalCorrectChars / finalTotalTyped) * 100);
+          const finalAccuracy = Math.round((finalCorrectChars / finalTotalTyped) * 100);
           const finalWpm = Math.round(((finalTotalTyped / 5) / timeElapsedInSeconds) * 60);
           
-          const newXp = (finalWpm * 0.5) + (finalAccuracy * 0.2);
-          setXpGained(newXp);
-      
-          setStats(prevStats => {
-            if (finalTotalTyped === 0) return prevStats; // Don't update stats if nothing was typed
-            
-            const xpForNextLevel = 100 * Math.pow(1.5, prevStats.level);
-            let newLevel = prevStats.level;
-            let currentXp = prevStats.xp + newXp;
-            
-            if (currentXp >= xpForNextLevel) {
-              newLevel += 1;
-              currentXp -= xpForNextLevel;
-              setLevelUp(true);
-            }
-      
-            const updatedStats: UserStats = {
-              ...prevStats,
-              wpm: Math.max(prevStats.wpm, finalWpm),
-              accuracy: Math.max(prevStats.accuracy, finalAccuracy),
-              streaks: prevStats.streaks + 1, // Simplified
-              level: newLevel,
-              xp: currentXp,
-            };
-      
-            return updatedStats;
-          });
+          if(completedEarly) {
+            const newXp = (finalWpm * 0.5) + (finalAccuracy * 0.2);
+            setXpGained(newXp);
+        
+            setStats(prevStats => {
+              const xpForNextLevel = 100 * Math.pow(1.5, prevStats.level);
+              let newLevel = prevStats.level;
+              let currentXp = prevStats.xp + newXp;
+              
+              if (currentXp >= xpForNextLevel) {
+                newLevel += 1;
+                currentXp -= xpForNextLevel;
+                setLevelUp(true);
+              }
+        
+              const updatedStats: UserStats = {
+                ...prevStats,
+                wpm: Math.max(prevStats.wpm, finalWpm),
+                accuracy: Math.max(prevStats.accuracy, finalAccuracy),
+                streaks: prevStats.streaks + 1, // Simplified
+                level: newLevel,
+                xp: currentXp,
+              };
+        
+              return updatedStats;
+            });
+          } else {
+            setXpGained(0);
+          }
 
           return currentErrors;
         });
