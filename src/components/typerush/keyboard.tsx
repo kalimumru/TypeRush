@@ -36,10 +36,9 @@ const getKeyId = (key: string) => {
 type KeyboardProps = {
   lastPressedKey: string | null;
   keyStats: Record<string, KeyStat>;
-  nextKey: string | null;
 };
 
-const Keyboard = ({ lastPressedKey, keyStats, nextKey }: KeyboardProps) => {
+const Keyboard = ({ lastPressedKey, keyStats }: KeyboardProps) => {
   const [activeKey, setActiveKey] = useState<string | null>(null);
 
   useEffect(() => {
@@ -51,8 +50,6 @@ const Keyboard = ({ lastPressedKey, keyStats, nextKey }: KeyboardProps) => {
     }
   }, [lastPressedKey]);
   
-  const nextKeyId = nextKey ? getKeyId(nextKey) : null;
-
   return (
     <div className="w-full max-w-4xl mx-auto p-2 md:p-4 rounded-lg bg-card shadow-md border-none" >
       <div className="space-y-1 md:space-y-2">
@@ -62,7 +59,6 @@ const Keyboard = ({ lastPressedKey, keyStats, nextKey }: KeyboardProps) => {
               const keyId = getKeyId(key);
               const uniqueKey = `${keyId}-${keyIndex}`;
               const isActive = activeKey === keyId;
-              const isNext = nextKeyId === keyId && !isActive;
               const displayKey = key.startsWith('Shift') ? 'Shift' : key;
               
               const keyClass = cn(
@@ -79,7 +75,6 @@ const Keyboard = ({ lastPressedKey, keyStats, nextKey }: KeyboardProps) => {
                   'transform scale-95 shadow-inner': isActive,
                 },
                 isActive && "bg-primary text-primary-foreground border-primary",
-                isNext && "bg-primary/20 border-primary/50",
                 key === " " ? "bg-secondary" : "bg-background"
               );
               

@@ -32,8 +32,6 @@ const TypingSection = ({
   onDurationChange,
 }: TypingSectionProps) => {
 
-  const nextKey = state === 'running' && typed.length < words.length ? words[typed.length] : null;
-
   return (
     <div className="flex-1 flex flex-col justify-center items-center gap-8 w-full">
       <Card className="relative w-full h-48 shadow-md border-none bg-card p-6">
@@ -69,7 +67,6 @@ const TypingSection = ({
       <Keyboard 
         lastPressedKey={lastPressedKey} 
         keyStats={stats.keyStats}
-        nextKey={nextKey}
       />
     </div>
   );
