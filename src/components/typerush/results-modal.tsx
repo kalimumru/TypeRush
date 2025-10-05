@@ -1,3 +1,4 @@
+
 "use client";
 
 import {
@@ -21,6 +22,7 @@ type ResultsModalProps = {
   xpGained: number;
   timeTaken: number;
   totalTyped: number;
+  isClosable: boolean;
 };
 
 const ResultsModal = ({
@@ -32,6 +34,7 @@ const ResultsModal = ({
   xpGained,
   timeTaken,
   totalTyped,
+  isClosable,
 }: ResultsModalProps) => {
 
   const title = totalTyped > 0 ? "Good Job!" : "Your Results";
@@ -41,7 +44,7 @@ const ResultsModal = ({
 
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onRestart()}>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && isClosable && onRestart()}>
       <DialogContent className="text-foreground shadow-lg border-none bg-card">
         <DialogHeader>
           <DialogTitle className="font-headline text-3xl text-center">
@@ -91,7 +94,7 @@ const ResultsModal = ({
           </div>
         </div>
         <DialogFooter className="gap-2 sm:gap-0">
-          <Button onClick={onRestart} variant="outline" className="w-full">
+          <Button onClick={onRestart} variant="outline" className="w-full" disabled={!isClosable}>
             <RefreshCw className="mr-2 h-4 w-4" />
             Try Again
           </Button>

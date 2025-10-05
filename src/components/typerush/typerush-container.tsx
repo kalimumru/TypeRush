@@ -32,6 +32,17 @@ const TyperushContainer = () => {
   } = useEngine({ duration });
   
   const { toast } = useToast();
+  const [isModalClosable, setIsModalClosable] = useState(false);
+
+  useEffect(() => {
+    if (state === 'finished') {
+      setIsModalClosable(false);
+      const timer = setTimeout(() => {
+        setIsModalClosable(true);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [state]);
 
   useEffect(() => {
     if (levelUp) {
@@ -80,6 +91,7 @@ const TyperushContainer = () => {
           xpGained={xpGained}
           timeTaken={timeTaken}
           totalTyped={totalTyped}
+          isClosable={isModalClosable}
         />
       )}
     </div>
