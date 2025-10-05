@@ -26,7 +26,7 @@ const LandingPage = () => {
                     <div className="absolute inset-0 bg-primary md:clip-path-polygon" style={{clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'}}></div>
                     <div className="hidden md:flex absolute inset-0 items-center justify-center p-8">
                         {studentImage && (
-                            <Card className="relative w-full h-full max-w-lg mx-auto shadow-2xl rounded-lg overflow-hidden border-none">
+                            <Card className="relative w-full h-full max-w-md mx-auto shadow-2xl rounded-lg overflow-hidden border-none">
                                 <Image 
                                     src={studentImage.imageUrl} 
                                     alt={studentImage.description}
