@@ -1,3 +1,4 @@
+
 "use client";
 
 import { GameState, UserStats } from "@/lib/types";
@@ -19,14 +20,12 @@ const GameStats = ({ state, wpm, accuracy, timeLeft, stats }: GameStatsProps) =>
     <div className="w-full flex flex-col gap-4">
         {state === 'running' ? (
             <LiveStats wpm={wpm} accuracy={accuracy} timeLeft={timeLeft} />
-        ) : state === 'finished' ? (
+        ) : (
             <Card className="shadow-md border-none bg-card text-left p-4">
                 <CardContent className="p-0">
                     <ProgressDashboard stats={stats} />
                 </CardContent>
             </Card>
-        ) : (
-            <StatsSection />
         )}
     </div>
   );
