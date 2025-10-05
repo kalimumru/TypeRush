@@ -52,7 +52,7 @@ const LandingPage = () => {
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                         <Link href="/play">
-                          <Button size="lg" className="text-base w-full sm:w-auto">
+                          <Button size="lg" className="text-base w-full sm:w-auto shadow-lg">
                               Start Typing
                           </Button>
                         </Link>
