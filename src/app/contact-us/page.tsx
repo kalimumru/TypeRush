@@ -1,7 +1,10 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 export default function ContactUsPage() {
   return (
@@ -20,15 +23,15 @@ export default function ContactUsPage() {
           <CardContent className="text-left">
             <form className="space-y-4">
               <div className="space-y-2">
-                <label htmlFor="name">Name</label>
+                <Label htmlFor="name">Name</Label>
                 <Input id="name" placeholder="Enter your name" />
               </div>
               <div className="space-y-2">
-                <label htmlFor="email">Email</label>
+                <Label htmlFor="email">Email</Label>
                 <Input id="email" type="email" placeholder="Enter your email" />
               </div>
               <div className="space-y-2">
-                <label htmlFor="message">Message</label>
+                <Label htmlFor="message">Message</Label>
                 <Textarea id="message" placeholder="Enter your message" />
               </div>
               <Button type="submit">Send Message</Button>
