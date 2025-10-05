@@ -1,11 +1,11 @@
 "use client";
 
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
-import { List, HelpCircle, TrendingUp } from "lucide-react";
+import { HelpCircle, TrendingUp } from "lucide-react";
 
 const StatsSection = () => {
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4 animate-in fade-in-50 duration-500">
       <Card className="bg-card text-left shadow-md border-none">
         <CardHeader className="p-4 pb-2">
             <CardTitle className="font-headline text-lg flex items-center gap-2">

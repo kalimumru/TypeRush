@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { Trophy } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import GameStats from "./game-stats";
-import StatsSection from "./stats-section";
+import AdPlaceholderSection from "./ad-placeholder-section";
 
 const TyperushContainer = () => {
   const [duration, setDuration] = useState(30);
@@ -67,7 +67,7 @@ const TyperushContainer = () => {
           />
         </div>
         <div className="md:col-span-1 md:order-3 order-3">
-          <StatsSection />
+          <AdPlaceholderSection />
         </div>
       </main>
       {state === "finished" && (
