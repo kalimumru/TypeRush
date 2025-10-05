@@ -1,3 +1,4 @@
+
 "use client";
 
 import useEngine from "@/hooks/use-engine";
@@ -48,11 +49,11 @@ const TyperushContainer = () => {
       <div className="w-full flex justify-center items-center">
         <Header />
       </div>
-      <main className="grid grid-cols-1 lg:grid-cols-4 gap-8 w-full mt-4 flex-1">
-        <div className="lg:col-span-1">
+      <main className="grid grid-cols-1 md:grid-cols-4 gap-8 w-full mt-4 flex-1">
+        <div className="md:col-span-1 md:order-1 order-2">
           <GameStats state={state} stats={stats} wpm={wpm} accuracy={accuracy} timeLeft={timeLeft} />
         </div>
-        <div className="lg:col-span-2">
+        <div className="md:col-span-2 md:order-2 order-1">
           <TypingSection
             words={words}
             typed={typed}
@@ -65,7 +66,7 @@ const TyperushContainer = () => {
             onDurationChange={setDuration}
           />
         </div>
-        <div className="lg:col-span-1">
+        <div className="md:col-span-1 md:order-3 order-3">
           <StatsSection />
         </div>
       </main>

@@ -1,3 +1,4 @@
+
 import type {Config} from 'tailwindcss';
 
 export default {
@@ -13,6 +14,9 @@ export default {
         sans: ['var(--font-inter)', 'sans-serif'],
         headline: ['var(--font-playfair-display)', 'serif'],
         mono: ['monospace'],
+      },
+      clipPath: {
+        polygon: 'polygon(25% 0, 100% 0, 100% 100%, 0 100%)',
       },
       colors: {
         background: 'hsl(var(--background))',
@@ -100,5 +104,14 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+      require('tailwindcss-animate'),
+      function({ addUtilities }) {
+        addUtilities({
+          '.clip-path-polygon': {
+            'clip-path': 'polygon(25% 0, 100% 0, 100% 100%, 0 100%)',
+          },
+        })
+      }
+  ],
 } satisfies Config;

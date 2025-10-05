@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Zap, Target } from 'lucide-react';

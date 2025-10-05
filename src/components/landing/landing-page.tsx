@@ -20,11 +20,11 @@ const LandingPage = () => {
       </header>
 
       <main className="flex-1">
-        <section className="relative w-full min-h-[60vh] md:min-h-screen flex items-center overflow-hidden">
+        <section className="relative w-full pt-24 pb-12 md:py-0 md:min-h-screen flex items-center overflow-hidden">
             <div className="absolute inset-y-0 right-0 w-full md:w-1/2">
                 <div className="relative h-full w-full">
-                    <div className="absolute inset-0 bg-primary" style={{clipPath: 'polygon(25% 0, 100% 0, 100% 100%, 0 100%)'}}></div>
-                    <div className="absolute inset-0 flex items-center justify-center p-8">
+                    <div className="absolute inset-0 bg-primary md:clip-path-polygon" style={{clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)'}}></div>
+                    <div className="hidden md:flex absolute inset-0 items-center justify-center p-8">
                         {studentImage && (
                             <Card className="relative w-full h-full max-w-lg mx-auto shadow-2xl rounded-lg overflow-hidden border-none">
                                 <Image 
@@ -42,17 +42,17 @@ const LandingPage = () => {
             </div>
 
             <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 w-full">
-                <div className="max-w-md">
+                <div className="max-w-xl text-center md:text-left">
                     <p className="text-sm font-bold uppercase tracking-widest text-primary mb-2">BECOME A KEYBOARD MASTER</p>
                     <h1 className="font-headline text-4xl md:text-6xl font-bold text-foreground mb-4">
                         Check your Typing Speed Instantly
                     </h1>
-                    <p className="text-base md:text-lg text-muted-foreground max-w-2xl mb-8">
+                    <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto md:mx-0 mb-8">
                         Take our free online typing speed test to see how fast you type. Join TypeRush for a fun, gamified experience to improve your WPM and accuracy.
                     </p>
-                    <div className="flex gap-4">
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                         <Link href="/play">
-                          <Button size="lg" className="text-base">
+                          <Button size="lg" className="text-base w-full sm:w-auto">
                               Start Typing
                           </Button>
                         </Link>

@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function PrivacyPolicyPage() {
@@ -5,12 +6,12 @@ export default function PrivacyPolicyPage() {
     <div className="bg-background text-foreground">
       <header className="px-4 sm:px-6 py-6 border-b">
         <div className="max-w-6xl mx-auto">
-          <h1 className="font-headline text-4xl font-bold">Privacy Policy</h1>
+          <h1 className="font-headline text-3xl md:text-4xl font-bold">Privacy Policy</h1>
         </div>
       </header>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12">
         <Card className="border-none shadow-none bg-transparent">
-          <CardContent className="text-left text-muted-foreground space-y-6">
+          <CardContent className="text-left text-muted-foreground space-y-6 p-0">
             <section className="space-y-2">
                 <h2 className="font-headline text-xl font-semibold text-foreground">1. Information We Collect</h2>
                 <p>We collect information to provide better services to all our users. We only collect user statistics like WPM, accuracy, and level progress. This data is stored locally in your browser and is not transmitted to our servers.</p>

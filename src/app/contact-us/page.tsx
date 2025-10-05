@@ -13,10 +13,10 @@ export default function ContactUsPage() {
     <div className="bg-background text-foreground">
       <header className="px-4 sm:px-6 py-6 border-b">
         <div className="max-w-6xl mx-auto">
-          <h1 className="font-headline text-4xl font-bold">Contact Us</h1>
+          <h1 className="font-headline text-3xl md:text-4xl font-bold">Contact Us</h1>
         </div>
       </header>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-12">
         <Card className="max-w-2xl mx-auto">
           <CardHeader className="text-left">
             <CardTitle className="font-headline text-2xl">Get in Touch</CardTitle>
