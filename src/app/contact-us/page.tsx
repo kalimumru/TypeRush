@@ -23,18 +23,18 @@ export default function ContactUsPage() {
             <p className="text-muted-foreground">We'd love to hear from you. Please fill out the form below.</p>
           </CardHeader>
           <CardContent className="text-left">
-            <form className="space-y-4">
+            <form action="https://formsubmit.co/s70210270@gmail.com" method="POST" className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" placeholder="Enter your name" />
+                <Input id="name" name="name" placeholder="Enter your name" required />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="Enter your email" />
+                <Input id="email" name="email" type="email" placeholder="Enter your email" required />
               </div>
                <div className="space-y-2">
                 <Label htmlFor="country">Country</Label>
-                <Select>
+                <Select name="country">
                   <SelectTrigger id="country">
                     <SelectValue placeholder="Select a country" />
                   </SelectTrigger>
@@ -50,7 +50,7 @@ export default function ContactUsPage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="message">Message</Label>
-                <Textarea id="message" placeholder="Enter your message" />
+                <Textarea id="message" name="message" placeholder="Enter your message" required />
               </div>
               <Button type="submit">Send Message</Button>
             </form>
