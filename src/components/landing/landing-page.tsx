@@ -107,10 +107,6 @@ const LandingPage = () => {
         </section>
 
       </main>
-
-       <footer className="w-full py-8 bg-secondary text-center text-muted-foreground text-sm">
-        <p>&copy; {new Date().getFullYear()} TypeRush. All rights reserved.</p>
-      </footer>
     </div>
   );
 };
