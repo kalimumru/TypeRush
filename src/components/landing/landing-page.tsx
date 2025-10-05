@@ -45,10 +45,10 @@ const LandingPage = () => {
                 <div className="max-w-md">
                     <p className="text-sm font-bold uppercase tracking-widest text-primary mb-2">BECOME A KEYBOARD MASTER</p>
                     <h1 className="font-headline text-4xl md:text-6xl font-bold text-foreground mb-4">
-                        The Ultimate Typing Challenge
+                        Check your Typing Speed Instantly
                     </h1>
                     <p className="text-base md:text-lg text-muted-foreground max-w-2xl mb-8">
-                        Boost your typing speed and accuracy through a fun, gamified experience. Level up, track your progress, and become a keyboard master.
+                        Take our free online typing speed test to see how fast you type. Join TypeRush for a fun, gamified experience to improve your WPM and accuracy.
                     </p>
                     <div className="flex gap-4">
                         <Link href="/play">
