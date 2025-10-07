@@ -41,7 +41,6 @@ const useEngine = (options?: EngineOptions) => {
   const [stats, setStats] = useState<UserStats>(defaultStats);
   const [isMounted, setIsMounted] = useState(false);
   const [xpGained, setXpGained] = useState(0);
-  const [isNewKeyCorrect, setIsNewKeyCorrect] = useState<boolean | null>(null);
   const [levelUp, setLevelUp] = useState(false);
   const [timeTaken, setTimeTaken] = useState(0);
 
@@ -88,6 +87,7 @@ const useEngine = (options?: EngineOptions) => {
     setStartTime(Date.now());
     setTimeLeft(gameTime);
     setLevelUp(false);
+    setTyped('');
   }, [prepareWords, gameTime]);
 
   const restart = useCallback(() => {
@@ -169,50 +169,24 @@ const useEngine = (options?: EngineOptions) => {
     };
   }, [state, startTime, gameTime, finishGame]);
   
-  const processInput = useCallback((newTyped: string) => {
-    if (state !== 'running' || newTyped.length > words.length) return;
+  const processInput = useCallback((currentTyped: string) => {
+    if (state !== 'running' || currentTyped.length > words.length) return;
     
-    setTyped(newTyped);
+    setTyped(currentTyped);
+    setLastPressedKey(currentTyped[currentTyped.length - 1] || null);
 
     const newErrors = new Set<number>();
-    for (let i = 0; i < newTyped.length; i++) {
-        if (newTyped[i] !== words[i]) {
+    for (let i = 0; i < currentTyped.length; i++) {
+        if (currentTyped[i] !== words[i]) {
             newErrors.add(i);
         }
     }
     setErrors(newErrors);
 
-    if (newTyped.length === words.length) {
+    if (currentTyped.length === words.length) {
       finishGame();
     }
   }, [state, words, finishGame]);
-
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (state !== 'running' || typed.length >= words.length) return;
-
-    // This logic is primarily for physical keyboards
-    if (e.isComposing || e.keyCode === 229) return;
-
-
-    e.preventDefault();
-    const { key } = e;
-    setLastPressedKey(key);
-
-    let newTyped = typed;
-    if (key === 'Backspace') {
-      newTyped = typed.slice(0, -1)
-    } else if (key.length === 1) {
-      newTyped = typed + key;
-    }
-    
-    processInput(newTyped);
-
-  }, [state, typed, words, processInput]);
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [handleKeyDown]);
   
   if (!isMounted) {
     return { 
