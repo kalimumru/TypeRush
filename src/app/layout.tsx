@@ -1,3 +1,4 @@
+
 import type { Metadata } from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
@@ -16,7 +17,7 @@ const playfairDisplay = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'TypeRush',
+  title: 'Typezuno',
   description: 'Gamified typing practice to boost your speed and accuracy.',
 };
 

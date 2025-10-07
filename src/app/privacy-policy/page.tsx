@@ -18,11 +18,11 @@ export default function PrivacyPolicyPage() {
             </section>
             <section className="space-y-2">
                 <h2 className="font-headline text-xl font-semibold text-foreground">2. How We Use Information</h2>
-                <p>The information we collect is used solely for the purpose of providing and improving the TypeRush experience. Your typing statistics are used to calculate your progress, award badges, and personalize your practice sessions. We do not share this information with any third parties.</p>
+                <p>The information we collect is used solely for the purpose of providing and improving the Typezuno experience. Your typing statistics are used to calculate your progress, award badges, and personalize your practice sessions. We do not share this information with any third parties.</p>
             </section>
             <section className="space-y-2">
                 <h2 className="font-headline text-xl font-semibold text-foreground">3. Data Storage</h2>
-                <p>All your game-related data is stored on your own device using browser localStorage. This means you have full control over your data. Clearing your browser's cache or data will permanently delete your TypeRush progress.</p>
+                <p>All your game-related data is stored on your own device using browser localStorage. This means you have full control over your data. Clearing your browser's cache or data will permanently delete your Typezuno progress.</p>
             </section>
              <section className="space-y-2">
                 <h2 className="font-headline text-xl font-semibold text-foreground">4. Changes to This Policy</h2>

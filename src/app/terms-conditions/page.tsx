@@ -14,15 +14,15 @@ export default function TermsConditionsPage() {
           <CardContent className="text-left text-muted-foreground space-y-6 p-0">
             <section className="space-y-2">
                 <h2 className="font-headline text-xl font-semibold text-foreground">1. Acceptance of Terms</h2>
-                <p>By accessing and using TypeRush, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+                <p>By accessing and using Typezuno, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
             </section>
             <section className="space-y-2">
                 <h2 className="font-headline text-xl font-semibold text-foreground">2. Description of Service</h2>
-                <p>TypeRush provides users with a gamified typing practice platform. The service is provided "as is" and the creators of TypeRush assume no responsibility for the timeliness, deletion, or failure to store any user data.</p>wget
+                <p>Typezuno provides users with a gamified typing practice platform. The service is provided "as is" and the creators of Typezuno assume no responsibility for the timeliness, deletion, or failure to store any user data.</p>wget
             </section>
             <section className="space-y-2">
                 <h2 className="font-headline text-xl font-semibold text-foreground">3. User Conduct</h2>
-                <p>You agree not to use the service to engage in any activity that would constitute a criminal offense or give rise to a civil liability. You agree not to attempt to reverse engineer or jeopardize the correct functioning of the TypeRush website.</p>
+                <p>You agree not to use the service to engage in any activity that would constitute a criminal offense or give rise to a civil liability. You agree not to attempt to reverse engineer or jeopardize the correct functioning of the Typezuno website.</p>
             </section>
              <section className="space-y-2">
                 <h2 className="font-headline text-xl font-semibold text-foreground">4. Modification of Terms</h2>

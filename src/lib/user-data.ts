@@ -1,7 +1,7 @@
 
 import { userStatsSchema, type UserStats } from './types';
 
-const USER_DATA_KEY = 'typerush_user_data';
+const USER_DATA_KEY = 'typezuno_user_data';
 
 export const defaultUserData: UserStats = userStatsSchema.parse({});
 

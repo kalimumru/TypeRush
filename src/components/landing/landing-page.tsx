@@ -14,7 +14,7 @@ const LandingPage = () => {
       <header className="absolute top-0 left-0 right-0 z-20 px-4 sm:px-6 py-6">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
             <Link href="/" className="flex items-center gap-2">
-                <span className="font-headline text-xl font-bold">TypeRush</span>
+                <span className="font-headline text-xl font-bold">Typezuno</span>
             </Link>
         </div>
       </header>
@@ -48,7 +48,7 @@ const LandingPage = () => {
                         Check your Typing Speed Instantly
                     </h1>
                     <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto md:mx-0 mb-8">
-                        Take our free online typing speed test to see how fast you type. Join TypeRush for a fun, gamified experience to improve your WPM and accuracy.
+                        Take our free online typing speed test to see how fast you type. Join Typezuno for a fun, gamified experience to improve your WPM and accuracy.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                         <Link href="/play">
@@ -64,7 +64,7 @@ const LandingPage = () => {
         <section className="py-12 md:py-24 bg-primary">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
                 <div className="text-center mb-12">
-                    <h2 className="font-headline text-3xl md:text-4xl font-bold text-primary-foreground">Why You'll Love TypeRush</h2>
+                    <h2 className="font-headline text-3xl md:text-4xl font-bold text-primary-foreground">Why You'll Love Typezuno</h2>
                     <p className="text-primary-foreground/80 mt-2">Everything you need to become a typing pro.</p>
                 </div>
 

@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import GameStats from "./game-stats";
 import StatsSection from "./stats-section";
 
-const TyperushContainer = () => {
+const TypezunoContainer = () => {
   const [duration, setDuration] = useState(30);
   const {
     state,
@@ -98,4 +98,4 @@ const TyperushContainer = () => {
   );
 };
 
-export default TyperushContainer;
+export default TypezunoContainer;
