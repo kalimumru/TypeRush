@@ -169,40 +169,45 @@ const useEngine = (options?: EngineOptions) => {
     };
   }, [state, startTime, gameTime, finishGame]);
   
+  const processInput = useCallback((newTyped: string) => {
+    if (state !== 'running' || newTyped.length > words.length) return;
+    
+    setTyped(newTyped);
+
+    const newErrors = new Set<number>();
+    for (let i = 0; i < newTyped.length; i++) {
+        if (newTyped[i] !== words[i]) {
+            newErrors.add(i);
+        }
+    }
+    setErrors(newErrors);
+
+    if (newTyped.length === words.length) {
+      finishGame();
+    }
+  }, [state, words, finishGame]);
+
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (state !== 'running' || typed.length >= words.length) return;
+
+    // This logic is primarily for physical keyboards
+    if (e.isComposing || e.keyCode === 229) return;
+
 
     e.preventDefault();
     const { key } = e;
     setLastPressedKey(key);
-    setIsNewKeyCorrect(null);
 
+    let newTyped = typed;
     if (key === 'Backspace') {
-      setTyped(prev => prev.slice(0, -1));
-      setErrors(prev => {
-        const newErrors = new Set(prev);
-        newErrors.delete(typed.length - 1);
-        return newErrors;
-      });
-      return;
+      newTyped = typed.slice(0, -1)
+    } else if (key.length === 1) {
+      newTyped = typed + key;
     }
+    
+    processInput(newTyped);
 
-    if (key.length === 1) {
-      if (words[typed.length] !== key) {
-        setErrors(prev => new Set(prev).add(typed.length));
-        setIsNewKeyCorrect(false);
-      } else {
-        setIsNewKeyCorrect(true);
-      }
-      
-      const newTyped = typed + key;
-      setTyped(newTyped);
-
-      if (newTyped.length === words.length) {
-        finishGame();
-      }
-    }
-  }, [state, typed, words, finishGame]);
+  }, [state, typed, words, processInput]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -224,13 +229,13 @@ const useEngine = (options?: EngineOptions) => {
       restart: () => {}, 
       startGame: () => {}, 
       xpGained: 0,
-      isNewKeyCorrect: null,
       levelUp: false,
       timeTaken: 0,
+      processInput: () => {},
     };
   }
 
-  return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained, isNewKeyCorrect, levelUp, timeTaken };
+  return { state, words, typed, errors, wpm, accuracy, timeLeft, lastPressedKey, stats, totalTyped, restart, startGame, xpGained, levelUp, timeTaken, processInput };
 };
 
 export default useEngine;

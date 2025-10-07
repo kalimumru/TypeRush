@@ -29,6 +29,7 @@ const TypezunoContainer = () => {
     xpGained,
     levelUp,
     timeTaken,
+    processInput,
   } = useEngine({ duration });
   
   const { toast } = useToast();
@@ -75,6 +76,7 @@ const TypezunoContainer = () => {
             state={state}
             duration={duration}
             onDurationChange={setDuration}
+            processInput={processInput}
           />
         </div>
         <div className="md:col-span-1 md:order-3 order-3">

@@ -20,6 +20,7 @@ type TypingSectionProps = {
   state: GameState;
   duration: number;
   onDurationChange: (duration: number) => void;
+  processInput: (text: string) => void;
 };
 
 const TypingSection = ({
@@ -32,6 +33,7 @@ const TypingSection = ({
   state,
   duration,
   onDurationChange,
+  processInput,
 }: TypingSectionProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -46,6 +48,12 @@ const TypingSection = ({
       inputRef.current?.focus();
     }
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (state === 'running') {
+        processInput(e.target.value);
+    }
+  }
 
   return (
     <div className="flex-1 flex flex-col justify-center items-center gap-4 md:gap-8 w-full" onClick={handleSectionClick}>
@@ -82,13 +90,17 @@ const TypingSection = ({
               ref={inputRef}
               type="text"
               className="absolute top-0 left-0 w-full h-full opacity-0 cursor-text"
-              // The value is kept empty to not show any text, as WordsDisplay handles it.
-              // The event handling is done globally in useEngine.
+              value={typed}
+              onChange={handleInputChange}
               onBlur={() => {
                 if (state === 'running') {
                   inputRef.current?.focus();
                 }
               }}
+              autoCapitalize="none"
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck="false"
             />
           <WordsDisplay words={words} typed={typed} totalTyped={totalTyped} />
         </div>
