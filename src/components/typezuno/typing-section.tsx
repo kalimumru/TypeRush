@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { Play, Timer } from "lucide-react";
 import { Card } from "../ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useEffect, useRef } from "react";
 
 type TypingSectionProps = {
   words: string;
@@ -32,9 +33,22 @@ const TypingSection = ({
   duration,
   onDurationChange,
 }: TypingSectionProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (state === 'running') {
+      inputRef.current?.focus();
+    }
+  }, [state]);
+
+  const handleSectionClick = () => {
+    if (state === 'running') {
+      inputRef.current?.focus();
+    }
+  };
 
   return (
-    <div className="flex-1 flex flex-col justify-center items-center gap-4 md:gap-8 w-full">
+    <div className="flex-1 flex flex-col justify-center items-center gap-4 md:gap-8 w-full" onClick={handleSectionClick}>
       <Card className="relative w-full h-48 shadow-md border-none bg-card p-2 md:p-6">
         {state !== 'running' ? (
            <div className="absolute inset-0 flex flex-col items-center justify-center bg-card/80 backdrop-blur-sm rounded-lg z-10 animate-in fade-in">
@@ -63,7 +77,21 @@ const TypingSection = ({
             </div>
            </div>
         ) : null}
-        <WordsDisplay words={words} typed={typed} totalTyped={totalTyped} />
+        <div className="relative w-full h-full">
+            <input
+              ref={inputRef}
+              type="text"
+              className="absolute top-0 left-0 w-full h-full opacity-0 cursor-text"
+              // The value is kept empty to not show any text, as WordsDisplay handles it.
+              // The event handling is done globally in useEngine.
+              onBlur={() => {
+                if (state === 'running') {
+                  inputRef.current?.focus();
+                }
+              }}
+            />
+          <WordsDisplay words={words} typed={typed} totalTyped={totalTyped} />
+        </div>
       </Card>
       <Keyboard 
         lastPressedKey={lastPressedKey} 

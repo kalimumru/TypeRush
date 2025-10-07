@@ -50,7 +50,7 @@ const WordsDisplay = ({ words, typed, totalTyped }: WordsDisplayProps) => {
   }, [words, typed]);
 
   return (
-    <div className="w-full h-full p-2 md:p-6 rounded-lg overflow-hidden leading-relaxed tracking-wider select-none">
+    <div className="w-full h-full p-2 md:p-6 rounded-lg overflow-hidden leading-relaxed tracking-wider select-none cursor-text">
       <div className="text-left whitespace-pre-wrap">
         {characters.map((item, index) => (
           <Character key={index} char={item.char} state={item.state} isCursor={item.isCursor} />
